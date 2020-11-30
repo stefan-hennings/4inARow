@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Optional;
 
 public class UserDatabase {
     private static List<User> userList;
@@ -12,7 +13,8 @@ public class UserDatabase {
 
     }
 
-    public User getUser(String username, String password) {
-        return null;
+    public static User getUser(String username, String password) {
+        Optional<User> collect = userList.stream()
+                .findFirst();
     }
 }
