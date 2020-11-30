@@ -5,7 +5,7 @@ public class GameStats implements Score{
     private int ties = 0;
 
     @Override
-    public int calculateWinProcent() {
+    public int calculateWinPercent() {
         return wins/(wins+losses);
     }
 

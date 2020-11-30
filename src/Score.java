@@ -1,7 +1,7 @@
 
 public interface Score {
 
-    int calculateWinProcent();
+    int calculateWinPercent();
     void addWin(int i);
     void addLosses(int i);
     void addTie(int i);
