@@ -9,6 +9,10 @@ public class UserDatabase {
 
     }
 
+    public static void addToUserList(User user) {
+        userList.add(user);
+    }
+
     public static void save() {
 
     }
