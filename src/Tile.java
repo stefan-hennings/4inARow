@@ -1,13 +1,14 @@
-/**
- * Created by Patrik Melander
- * Date: 2020-11-30
- * Time: 14:03
- * Project: 4inARow
- * Copyright: MIT
- */
+
 public enum Tile {
 
-    public final int RED = 1;
-    public final int YELLOW = 2;
-    public final int WHITE = 3;
+    RED(1), YELLOW(2), WHITE(0);
+    private final int i;
+
+    public int getI() {
+        return i;
+    }
+
+    private Tile(int i) {
+        this.i = i;
+    }
 }
