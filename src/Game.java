@@ -14,7 +14,7 @@ public class Game extends JFrame {
 
     }
 
-    public void placeTile (User user, int collumn){
+    public void placeTile (User user, int column){
 
     }
 
