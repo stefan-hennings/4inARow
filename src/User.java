@@ -37,8 +37,8 @@ public class User {
                 .setPassword("test");
 
 
-
         System.out.println(user);
     }
+}
 
 
