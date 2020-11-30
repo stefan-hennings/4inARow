@@ -1,3 +1,4 @@
+import javax.management.StringValueExp;
 
 public class User {
 
@@ -34,10 +35,12 @@ public class User {
         User user = new User()
                 .setUserName("Oscar")
                 .setPassword("test");
+        user.gameStats.addWin(2);
+        user.gameStats.addLosses(1);
+        System.out.println(user.gameStats.getWins());
 
+        System.out.println("" + user.gameStats.calculateWinPercent());
 
-
-        System.out.println(user);
     }
 
 }
