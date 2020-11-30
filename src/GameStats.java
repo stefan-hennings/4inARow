@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class GameStats implements Score {
+public class GameStats implements Score, Serializable {
 
     private double wins;
     private double losses;

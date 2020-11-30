@@ -1,7 +1,6 @@
-import javax.management.StringValueExp;
+import java.io.Serializable;
 
-
-public class User {
+public class User implements Serializable {
 
     // Design pattern Fluent interface
 
