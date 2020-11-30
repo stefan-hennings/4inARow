@@ -28,9 +28,7 @@ public class LoginMenuPanel extends JPanel {
     }
 
     void loginSuccessful(User user) {
-        // Kolla om det var första eller andra användaren som loggade in
-        // Om bara en är inloggad gå tillbaka till login
-        //  annars Ladda game panel
+        // Skicka user till Game
     }
 
     void loginFail() {

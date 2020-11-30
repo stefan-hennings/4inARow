@@ -11,6 +11,7 @@ public class UserDatabase {
 
     public static void addToUserList(User user) {
         userList.add(user);
+        save();
     }
 
     public static void save() {
