@@ -17,11 +17,13 @@ public class LoginMenuPanel extends JPanel {
         user.setUserName(userNameField.getText());
         user.setPassword(passwordField.getText());
 
+        UserDatabase.addToUserList(user);
 
     }
 
     void attemptLogin() {
-
+        User user = new User();
+        user = UserDatabase.getUser(userNameField.getText(), passwordField.getText());
     }
 
     void loginSuccessful() {

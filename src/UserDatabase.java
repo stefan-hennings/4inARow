@@ -16,7 +16,7 @@ public class UserDatabase {
 
     }
 
-    public User getUser(String username, String password) {
+    public static User getUser(String username, String password) {
         return null;
     }
 }
