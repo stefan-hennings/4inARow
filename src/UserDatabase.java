@@ -17,9 +17,9 @@ public class UserDatabase {
 
     }
 
-    public static User getUser(String username, String password) {
-        Optional<User> userOptional = userList.stream()
-                .filter(user -> user.getUserName().equals(username) && user.getPassword().equals(password))
+    public static Optional<User> getUser(String userName, String password) {
+        return userList.stream()
+                .filter(user -> user.getUserName().equals(userName) && user.getPassword().equals(password))
                 .findFirst();
     }
 }

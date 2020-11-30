@@ -1,13 +1,11 @@
-import jdk.swing.interop.SwingInterOpUtils;
-
 import javax.swing.*;
+import java.util.Optional;
 
 public class LoginMenuPanel extends JPanel {
     JTextField userNameField;
     JTextField passwordField;
     JButton newUserButton;
     JButton confirmLoginButton;
-
 
 
     public LoginMenuPanel() {
@@ -24,13 +22,9 @@ public class LoginMenuPanel extends JPanel {
     }
 
     void attemptLogin() {
-        User user = new User();
-        user = UserDatabase.getUser(userNameField.getText(), passwordField.getText());
-         if (user == null)
-             loginFail();
-         else
-             loginSuccessful(user);
-
+        Optional<User> userOptional;
+        userOptional = UserDatabase.getUser(userNameField.getText(), passwordField.getText());
+        userOptional.ifPresentOrElse(this::loginSuccessful, this::loginFail);
     }
 
     void loginSuccessful(User user) {
