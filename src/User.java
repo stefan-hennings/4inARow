@@ -36,8 +36,8 @@ public class User {
                 .setUserName("Oscar")
                 .setPassword("test");
 
-        user.gameStats.addWin(1);
-        user.gameStats.addLoss(1);
+        user.gameStats.addWin();
+        user.gameStats.addLoss();
 
         System.out.println(user);
 

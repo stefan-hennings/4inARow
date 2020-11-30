@@ -10,17 +10,17 @@ public class GameStats implements Score {
     }
 
     @Override
-    public void addWin(int i) {
+    public void addWin() {
         this.wins++;
     }
 
     @Override
-    public void addLoss(int i) {
+    public void addLoss() {
         this.losses++;
     }
 
     @Override
-    public void addTie(int i) {
+    public void addTie() {
         this.ties++;
     }
 
