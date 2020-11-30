@@ -13,6 +13,10 @@ public class LoginMenuPanel extends JPanel {
     }
 
     void createUser() {
+        User user = new User();
+        user.setUserName(userNameField.getText());
+        user.setPassword(passwordField.getText());
+
 
     }
 
