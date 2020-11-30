@@ -36,12 +36,16 @@ public class User {
         User user = new User()
                 .setUserName("Oscar")
                 .setPassword("test");
-        user.gameStats.addWin(2);
-        user.gameStats.addLosses(1);
+        user.gameStats.addWin();
+        user.gameStats.addLoss();
+        user.gameStats.addTie();
+        user.gameStats.addLoss();
         System.out.println(user.gameStats.getWins());
+        System.out.println(user.gameStats.getLosses());
 
         System.out.println("" + user.gameStats.calculateWinPercent());
 
     }
+}
 
 

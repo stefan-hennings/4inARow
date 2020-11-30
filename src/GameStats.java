@@ -1,38 +1,41 @@
+import java.text.DecimalFormat;
+
 public class GameStats implements Score {
 
-    private int wins;
-    private int losses;
-    private int ties;
+    private double wins;
+    private double losses;
+    private double ties;
+    DecimalFormat d = new DecimalFormat("#.##");
 
     @Override
-    public double calculateWinPercent() {
-        return wins / (wins + losses);
+    public String calculateWinPercent() {
+        return d.format(wins/(wins + losses + ties)*100)+ "%";
     }
 
     @Override
-    public void addWin(int i) {
+    public void addWin() {
         this.wins++;
     }
 
     @Override
-    public void addLosses(int i) {
+    public void addLoss() {
         this.losses++;
     }
 
     @Override
-    public void addTie(int i) {
+    public void addTie() {
         this.ties++;
     }
 
-    public int getWins() {
+    public double getWins() {
         return wins;
     }
 
-    public int getLosses() {
+    public double getLosses() {
         return losses;
     }
 
-    public int getDraws() {
+    public double getDraws() {
         return ties;
     }
 
