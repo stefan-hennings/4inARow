@@ -1,12 +1,12 @@
-public class GameStats implements Score{
+public class GameStats implements Score {
 
     private int wins = 0;
     private int losses = 0;
     private int ties = 0;
 
     @Override
-    public int calculateWinPercent() {
-        return wins/(wins+losses);
+    public double calculateWinPercentage() {
+        return 100.0 * wins / (wins + losses);
     }
 
     @Override
@@ -15,7 +15,7 @@ public class GameStats implements Score{
     }
 
     @Override
-    public void addLosses(int i) {
+    public void addLoss(int i) {
         this.losses++;
     }
 
