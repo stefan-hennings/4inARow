@@ -16,7 +16,7 @@ public class LoginMenuPanel extends JPanel {
 
     }
 
-    void login() {
+    void attemptLogin() {
 
     }
 
