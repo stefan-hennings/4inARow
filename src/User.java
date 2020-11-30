@@ -1,4 +1,5 @@
 
+
 public class User {
 
     // Design pattern Fluent interface
@@ -40,4 +41,4 @@ public class User {
         System.out.println(user);
     }
 
-}
+
