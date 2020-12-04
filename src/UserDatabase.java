@@ -8,11 +8,15 @@ public class UserDatabase {
 
     }
 
+    public static void addToUserList(User user) {
+        userList.add(user);
+    }
+
     public static void save() {
 
     }
 
-    public User getUser(String username, String password) {
+    public static User getUser(String username, String password) {
         return null;
     }
 }
