@@ -4,11 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDatabase {
-    private static List<User> userList;
+    private static List<User> userList = new ArrayList<>();
     private static final String fileName = "database.ser";
 
+    @SuppressWarnings("unchecked")
     public static void load() {
-
+        try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(fileName))){
+            userList = (ArrayList<User>)reader.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void save() {
