@@ -1,3 +1,5 @@
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +12,12 @@ public class UserDatabase {
     }
 
     public static void save() {
-
+        try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(fileName))){
+            writer.writeObject(userList);
+            System.out.println("User list saved");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void addToUserList(User user) {
