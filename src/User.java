@@ -22,6 +22,10 @@ public class User implements Serializable {
         return this;
     }
 
+    public GameStats getGameStats() {
+        return gameStats;
+    }
+
     public String getPassword() {
         return password;
     }

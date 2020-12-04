@@ -1,8 +1,8 @@
 import javax.swing.*;
 
 public class Game extends JFrame {
-    User user1;
-    User user2;
+    User redPlayer;
+    User yellowPlayer;
     int tileCounter = 0;
     int[][] tileGrid = new int[6][7];
     boolean isRedTurn = true;
@@ -18,7 +18,7 @@ public class Game extends JFrame {
             if (tileGrid[row][column] == Tile.WHITE.getI()) {
                 tileGrid[row][column] = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
                 tileCounter++;
-                if (hasWon(row, column)) {
+                if (hasWon(row, column) || tileCounter == 42) {
                     processResult();
                     return;
                 }
@@ -90,14 +90,24 @@ public class Game extends JFrame {
     }
 
     public void processResult() {
-
+        if (tileCounter == 42) {
+            redPlayer.getGameStats().addTie();
+            yellowPlayer.getGameStats().addTie();
+        } else if (isRedTurn) {
+            redPlayer.getGameStats().addWin();
+            yellowPlayer.getGameStats().addLoss();
+        } else {
+            yellowPlayer.getGameStats().addWin();
+            redPlayer.getGameStats().addLoss();
+        }
+        // TODO: 04-Dec-20 show results screen
     }
 
     public void addUser(User user) {
-        if ((user1 == null)) {
-            user1 = user;
+        if ((redPlayer == null)) {
+            redPlayer = user;
         } else {
-            user2 = user;
+            yellowPlayer = user;
             startGame();
         }
     }
