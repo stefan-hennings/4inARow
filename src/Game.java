@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Game extends JFrame {
+public class Game extends JFrame implements ActionListener {
     User redPlayer;
     User yellowPlayer;
     int tileCounter = 0;
@@ -122,5 +124,9 @@ public class Game extends JFrame {
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
 
