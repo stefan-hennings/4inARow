@@ -1,16 +1,30 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Optional;
 
-public class LoginMenuPanel extends JPanel {
-    JTextField userNameField;
-    JTextField passwordField;
-    JButton newUserButton;
-    JButton confirmLoginButton;
+public class LoginMenuPanel extends JPanel implements ActionListener {
+    JTextField userNameField = new JTextField("Enter username");
+    JTextField passwordField = new JTextField("Enter password");
+    JButton newUserButton = new JButton("Create new user");
+    JButton confirmLoginButton = new JButton("Log in");
+
+    JTextField output = new JTextField(20);
+
     Game game;
 
 
     public LoginMenuPanel() {
         this.game = new Game(this);
+        setLayout(new GridLayout(5, 1));
+        add(output);
+        add(userNameField);
+        add(passwordField);
+        add(newUserButton);
+        newUserButton.addActionListener(this);
+        add(confirmLoginButton);
+        confirmLoginButton.addActionListener(this);
     }
 
     void createUser() {
@@ -18,8 +32,8 @@ public class LoginMenuPanel extends JPanel {
         user.setUserName(userNameField.getText());
         user.setPassword(passwordField.getText());
 
-        UserDatabase.addToUserList(user);
-
+        UserDatabase.addUser(user);
+        output.setText(user + " added");
     }
 
     void attemptLogin() {
@@ -29,11 +43,25 @@ public class LoginMenuPanel extends JPanel {
     }
 
     void loginSuccessful(User user) {
-        game.addUser(user);
+        System.out.println(user + " logged in");
+//        game.addUser(user);
     }
 
     void loginFail() {
-        System.out.println("Felaktigt användarnamn eller lösenord, försök igen");// fast i GUI
+        output.setText("Felaktigt användarnamn eller lösenord, försök igen");// fast i GUI
         //Skicka tillbaka till loginfönstret och be användaren försöka igen
+    }
+
+    public static void main(String[] args) {
+        new LoginMenuPanel();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == newUserButton) {
+            createUser();
+        } else if (e.getSource() == confirmLoginButton) {
+            attemptLogin();
+        }
     }
 }

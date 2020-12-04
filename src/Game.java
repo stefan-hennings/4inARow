@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class Game extends JFrame {
     User redPlayer;
@@ -9,8 +10,12 @@ public class Game extends JFrame {
 
     public Game(LoginMenuPanel loginMenuPanel) {
         setVisible(true);
-        add(loginMenuPanel);
-
+        setLayout(new BorderLayout());
+        add(BorderLayout.CENTER, loginMenuPanel);
+//        setLocationRelativeTo(null);
+        setSize(new Dimension(1000, 800));
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        repaint();
     }
 
     public void placeTile(int column) {

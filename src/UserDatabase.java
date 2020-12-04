@@ -25,7 +25,7 @@ public class UserDatabase {
         }
     }
 
-    public static void addToUserList(User user) {
+    public static void addUser(User user) {
         userList.add(user);
         save();
     }
