@@ -10,7 +10,7 @@ public class GameStats implements Score, Serializable {
 
     @Override
     public String calculateWinPercent() {
-        return d.format(wins/(wins + losses + ties)*100)+ "%";
+        return d.format(wins/(wins + losses + ties)*100)+"%";
     }
 
     @Override

@@ -42,7 +42,7 @@ public class User implements Serializable {
         System.out.println(user.gameStats.getWins());
         System.out.println(user.gameStats.getLosses());
 
-        System.out.println("" + user.gameStats.calculateWinPercent());
+        System.out.println(user.getUserName() + " " + user.getPassword() +" " + user.gameStats.calculateWinPercent());
 
     }
 }
