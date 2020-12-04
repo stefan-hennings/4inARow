@@ -10,7 +10,7 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
     JButton newUserButton = new JButton("Create new user");
     JButton confirmLoginButton = new JButton("Log in");
 
-    JTextField output = new JTextField(20);
+    JLabel outputLabel = new JLabel("Välkommen till världens bästa 4-i-rad spel!");
 
     Game game;
 
@@ -18,7 +18,7 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
     public LoginMenuPanel() {
         this.game = new Game(this);
         setLayout(new GridLayout(5, 1));
-        add(output);
+        add(outputLabel);
         add(userNameField);
         add(passwordField);
         add(newUserButton);
@@ -33,7 +33,7 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
         user.setPassword(passwordField.getText());
 
         UserDatabase.addUser(user);
-        output.setText(user + " added");
+        outputLabel.setText(user + " added");
     }
 
     void attemptLogin() {
@@ -43,12 +43,12 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
     }
 
     void loginSuccessful(User user) {
-        output.setText(user + " logged in");
+        outputLabel.setText(user + " logged in");
 //        game.addUser(user);
     }
 
     void loginFail() {
-        output.setText("Felaktigt användarnamn eller lösenord, försök igen");// fast i GUI
+        outputLabel.setText("Felaktigt användarnamn eller lösenord, försök igen");// fast i GUI
         //Skicka tillbaka till loginfönstret och be användaren försöka igen
     }
 
