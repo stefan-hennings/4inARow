@@ -43,7 +43,7 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
     }
 
     void loginSuccessful(User user) {
-        System.out.println(user + " logged in");
+        output.setText(user + " logged in");
 //        game.addUser(user);
     }
 
@@ -53,6 +53,7 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
     }
 
     public static void main(String[] args) {
+        UserDatabase.load();
         new LoginMenuPanel();
     }
 
