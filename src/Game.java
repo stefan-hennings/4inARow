@@ -36,7 +36,8 @@ public class Game extends JFrame {
 
         //Horizontal win
         for (currentColumn = startColumn; currentColumn < endColumn; currentColumn++) {
-            inARowCounter = ((tileGrid[placedRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
+            //Reset counter to 0 if the row of correct colors is broken
+            inARowCounter = tileGrid[placedRow][currentColumn] == correctColor ? inARowCounter + 1 : 0;
             if (inARowCounter == 4) {
                 return true;
             }
