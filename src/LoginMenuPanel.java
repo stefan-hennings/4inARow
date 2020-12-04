@@ -29,7 +29,7 @@ public class LoginMenuPanel extends JPanel {
     }
 
     void loginSuccessful(User user) {
-        // Skicka user till Game
+        game.addUser(user);
     }
 
     void loginFail() {
