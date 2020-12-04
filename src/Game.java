@@ -7,6 +7,12 @@ public class Game extends JFrame {
     int[][] tileGrid = new int[6][7];
     boolean isRedTurn = true;
 
+    public Game(LoginMenuPanel loginMenuPanel) {
+        setVisible(true);
+        add(loginMenuPanel);
+
+    }
+
     public void placeTile(int column) {
         for (int row = 0; row < 6; row++) {
             if (tileGrid[row][column] == Tile.WHITE.getI()) {

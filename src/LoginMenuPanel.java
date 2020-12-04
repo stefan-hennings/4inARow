@@ -6,10 +6,11 @@ public class LoginMenuPanel extends JPanel {
     JTextField passwordField;
     JButton newUserButton;
     JButton confirmLoginButton;
+    Game game;
 
 
     public LoginMenuPanel() {
-
+        this.game = new Game(this);
     }
 
     void createUser() {
