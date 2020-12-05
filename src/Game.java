@@ -22,7 +22,7 @@ public class Game extends JFrame implements ActionListener {
 
     public void placeTile(int column) {
         for (int row = 0; row < 6; row++) {
-            if (tileGrid[row][column] == Tile.WHITE.getI()) {
+            if (tileGrid[row][column] == Tile.EMPTY.getI()) {
                 tileGrid[row][column] = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
                 tileCounter++;
                 if (hasWon(row, column) || tileCounter == 42) {
