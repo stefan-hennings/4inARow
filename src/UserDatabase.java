@@ -25,9 +25,16 @@ public class UserDatabase {
         }
     }
 
-    public static void addUser(User user) {
-        userList.add(user);
-        save();
+    public static void addUser(User recievedUser) {
+        Optional<User> userOptional = userList.stream()
+                .filter(user -> user.getUserName().equals(recievedUser.getUserName()))
+                .findFirst();
+        if (userOptional.isEmpty()) {
+            userList.add(recievedUser);
+            save();
+        } else {
+            throw new IllegalArgumentException("Username is already in use");
+        }
     }
 
     public static Optional<User> getUser(String userName, String password) {

@@ -29,11 +29,15 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
 
     void createUser() {
         User user = new User();
-        user.setUserName(userNameField.getText());
-        user.setPassword(passwordField.getText());
+        user.setUserName(userNameField.getText().trim());
+        user.setPassword(passwordField.getText().trim());
 
-        UserDatabase.addUser(user);
-        outputLabel.setText(user + " added");
+        try {
+            UserDatabase.addUser(user);
+            outputLabel.setText(user + " added");
+        } catch (IllegalArgumentException e) {
+            outputLabel.setText(e.getMessage());
+        }
     }
 
     void attemptLogin() {
