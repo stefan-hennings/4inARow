@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameScreenPanel extends JPanel implements ActionListener {
+public class GameBoardPanel extends JPanel implements ActionListener {
     ImageIcon imageIconWhiteTile;
     ImageIcon imageIconRedTile;
     ImageIcon imageIconYellowTile;
@@ -11,9 +11,10 @@ public class GameScreenPanel extends JPanel implements ActionListener {
 
     Game game;
 
-    public GameScreenPanel(Game game) {
+    public GameBoardPanel(Game game) {
         this.game = game;
         setBackground(Color.BLUE);
+        setLayout(new GridLayout(6, 7));
         createButtons();
         repaint();
     }
@@ -22,12 +23,17 @@ public class GameScreenPanel extends JPanel implements ActionListener {
         for (JButton[] buttonRow : buttons) {
             for (JButton button : buttonRow) {
                 button = new JButton();
+                add(button);
                 button.addActionListener(game);
                 button.setEnabled(false);
                 button.setBackground(Color.WHITE);
                 button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             }
         }
+    }
+
+    public JButton[][] getButtons() {
+        return buttons;
     }
 
     @Override
