@@ -25,7 +25,7 @@ public class GameBoardPanel extends JPanel implements ActionListener {
                 button = new JButton();
                 add(button);
                 button.addActionListener(game);
-                button.setEnabled(false);
+//                button.setEnabled(false);
                 button.setBackground(Color.WHITE);
                 button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             }

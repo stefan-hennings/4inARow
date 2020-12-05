@@ -48,12 +48,11 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
 
     void loginSuccessful(User user) {
         outputLabel.setText(user + " logged in");
-//        game.addUser(user);
+        game.addUser(user);
     }
 
     void loginFail() {
-        outputLabel.setText("Felaktigt användarnamn eller lösenord, försök igen");// fast i GUI
-        //Skicka tillbaka till loginfönstret och be användaren försöka igen
+        outputLabel.setText("Felaktigt användarnamn eller lösenord, försök igen");
     }
 
     public static void main(String[] args) {

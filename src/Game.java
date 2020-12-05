@@ -10,7 +10,11 @@ public class Game extends JFrame implements ActionListener {
     int[][] tileGrid = new int[6][7];
     boolean isRedTurn = true;
 
+    private LoginMenuPanel loginMenuPanel;
+    private GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
+
     public Game(LoginMenuPanel loginMenuPanel) {
+        this.loginMenuPanel = loginMenuPanel;
         setVisible(true);
         setLayout(new BorderLayout());
         add(BorderLayout.CENTER, loginMenuPanel);
@@ -24,6 +28,11 @@ public class Game extends JFrame implements ActionListener {
         for (int row = 0; row < 6; row++) {
             if (tileGrid[row][column] == Tile.EMPTY.getI()) {
                 tileGrid[row][column] = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
+                gameBoardPanel.getButtons()[row][column].setBackground(isRedTurn ? Color.RED : Color.YELLOW);
+
+                if (row < 5) {
+                    gameBoardPanel.getButtons()[row+1][column].setEnabled(true);
+                }
                 tileCounter++;
                 if (hasWon(row, column) || tileCounter == 42) {
                     processResult();
@@ -32,6 +41,12 @@ public class Game extends JFrame implements ActionListener {
                 isRedTurn = !isRedTurn;
                 return;
             }
+        }
+        for (int[] row : tileGrid) {
+            for (int col : row) {
+                System.out.print(" " + col);
+            }
+            System.out.println();
         }
     }
 
@@ -120,13 +135,28 @@ public class Game extends JFrame implements ActionListener {
     }
 
     private void startGame() {
-
+        remove(loginMenuPanel);
+        add(gameBoardPanel);
+        for (int i = 0; i < 7; i++) {
+            System.out.println("Enabling " + i);
+//            gameBoardPanel.getButtons()[0][i].setEnabled(true);
+        }
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        System.out.println("Action performed");
+        for (int row = 0; row < 6; row++) {
+            System.out.println("Checking row " + row);
+            for (int column = 0; column < 7; column++) {
+                System.out.println("Checking column " + column);
+                if (e.getSource() == gameBoardPanel.getButtons()[row][column]) {
+                    System.out.println("Button " + row + ", " + column + "detected");
+                    placeTile(column);
+                }
+            }
+        }
     }
 }
 
