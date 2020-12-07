@@ -1,17 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.Arrays;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GameBoardPanel extends JPanel implements ActionListener {
-    private ImageIcon whiteTile = SetSizeForTile.setSize(new ImageIcon("src/theGame/images/whiteDot.png"), 100,100);
-    private ImageIcon yellowTile = SetSizeForTile.setSize(new ImageIcon("src/theGame/images/yellowTile.png"), 100, 100);
-    private ImageIcon redYellow = SetSizeForTile.setSize(new ImageIcon("src/theGame/images/redTile.png"), 100, 100);
+    public static final ImageIcon WHITE_TILE = formatIcon(new ImageIcon("src\\images\\whiteDot.png"), 100,100);
+    public static final ImageIcon YELLOW_TILE = formatIcon(new ImageIcon("src\\images\\yellowTile.png"), 100, 100);
+    public static final ImageIcon RED_TILE = formatIcon(new ImageIcon("src\\images\\redTile.png"), 100, 100);
     JButton[][] buttons = new JButton[6][7];
-    int currentPlayer = 1;
-    Color player1 = new Color(255, 145, 143);
-    Color player2 = new Color(251, 255, 125);
-    Color currentColor = player1;
 
     Game game;
 
@@ -24,48 +20,19 @@ public class GameBoardPanel extends JPanel implements ActionListener {
     }
 
     private void createButtons() {
-        for (JButton[] buttonRow : buttons) {
-            for (JButton button : buttonRow) {
-                button = new JButton();
-                add(button);
-
-                button.addActionListener(game);
-                button.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        JButton jButton = (JButton) e.getSource();
-                        jButton.setBackground(currentColor);
-                    }
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        JButton jButton = (JButton) e.getSource();
-                        jButton.setBackground(Color.WHITE);
-                    }
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        JButton jButton = (JButton) e.getSource();
-                        if (currentPlayer == 1){
-                            jButton.setBackground(Color.RED);
-                            currentColor = player2;
-                            currentPlayer = 2;
-                        }else{
-                            jButton.setBackground(Color.YELLOW);
-                            currentColor = player1;
-                            currentPlayer = 1;
-                        }
-                        jButton.removeMouseListener(this);
-                    }
-                });
+        for (int row = 5; row >= 0; row--) {
+            for (int column = 0; column < 7; column++) {
+                buttons[row][column] = new JButton();
+                add(buttons[row][column]);
+                buttons[row][column].addActionListener(game);
+                buttons[row][column].setBackground(Color.BLUE);
 //                button.setEnabled(false);
-                //button.setBackground(Color.WHITE);
-                button.setIcon(whiteTile);
-                button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                buttons[row][column].setIcon(WHITE_TILE);
+                buttons[row][column].setFocusPainted(false);
+                buttons[row][column].setBorder(BorderFactory.createLineBorder(Color.BLUE));
             }
         }
     }
-
-
-
 
     public JButton[][] getButtons() {
         return buttons;
@@ -73,7 +40,15 @@ public class GameBoardPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 
+    public static ImageIcon formatIcon(ImageIcon oldImageIcon, int width,
+                                int height) {
+        Image oldImage = oldImageIcon.getImage();
+        Image newImg = oldImage.getScaledInstance(width, height,
+                java.awt.Image.SCALE_SMOOTH);
+
+        return new ImageIcon(newImg);
+    }
 }
