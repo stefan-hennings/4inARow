@@ -28,7 +28,7 @@ public class Game extends JFrame implements ActionListener {
         for (int row = 0; row < 6; row++) {
             if (tileGrid[row][column] == Tile.EMPTY.getI()) {
                 tileGrid[row][column] = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
-                gameBoardPanel.getButtons()[row][column].setBackground(isRedTurn ? Color.RED : Color.YELLOW);
+                gameBoardPanel.getButtons()[row][column].setIcon(isRedTurn ? GameBoardPanel.RED_TILE : GameBoardPanel.YELLOW_TILE);
 
                 if (row < 5) {
                     gameBoardPanel.getButtons()[row+1][column].setEnabled(true);
@@ -150,12 +150,9 @@ public class Game extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println("Action performed");
 
-//        placeTile(2);
-
         for (int row = 0; row < 6; row++) {
             for (int column = 0; column < 7; column++) {
                 if (e.getSource() == gameBoardPanel.getButtons()[row][column]) {
-                    System.out.println("Button " + row + ", " + column + "detected");
                     placeTile(column);
                 }
             }
