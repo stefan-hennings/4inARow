@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameBoardPanel extends JPanel implements ActionListener {
-    public static final ImageIcon WHITE_TILE = SetSizeForTile.setSize(new ImageIcon("src\\images\\whiteDot.png"), 100,100);
-    public static final ImageIcon YELLOW_TILE = SetSizeForTile.setSize(new ImageIcon("src\\images\\yellowTile.png"), 100, 100);
-    public static final ImageIcon RED_TILE = SetSizeForTile.setSize(new ImageIcon("src\\images\\redTile.png"), 100, 100);
+    public static final ImageIcon WHITE_TILE = formatIcon(new ImageIcon("src\\images\\whiteDot.png"), 100,100);
+    public static final ImageIcon YELLOW_TILE = formatIcon(new ImageIcon("src\\images\\yellowTile.png"), 100, 100);
+    public static final ImageIcon RED_TILE = formatIcon(new ImageIcon("src\\images\\redTile.png"), 100, 100);
     JButton[][] buttons = new JButton[6][7];
 
     Game game;

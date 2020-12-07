@@ -63,7 +63,7 @@ public class Game extends JFrame implements ActionListener {
         int currentColumn;
 
         //Horizontal win
-        for (currentColumn = startColumn; currentColumn < endColumn; currentColumn++) {
+        for (currentColumn = startColumn; currentColumn <= endColumn; currentColumn++) {
             //Reset counter to 0 if the row of correct colors is broken
             inARowCounter = tileGrid[placedRow][currentColumn] == correctColor ? inARowCounter + 1 : 0;
             if (inARowCounter == 4) {
@@ -74,7 +74,7 @@ public class Game extends JFrame implements ActionListener {
         inARowCounter = 0;
 
         //Vertical win
-        for (currentRow = startRow; currentRow < endRow; currentRow++) {
+        for (currentRow = startRow; currentRow <= endRow; currentRow++) {
             inARowCounter = ((tileGrid[currentRow][placedColumn] == correctColor) ? inARowCounter + 1 : 0);
             if (inARowCounter == 4) {
                 return true;
@@ -85,7 +85,7 @@ public class Game extends JFrame implements ActionListener {
         //Bottom left to top right win
         currentColumn = startColumn;
         currentRow = startRow;
-        while (currentRow < endRow && currentColumn < endColumn) {
+        while (currentRow <= endRow && currentColumn <= endColumn) {
             inARowCounter = ((tileGrid[currentRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
             if (inARowCounter == 4) {
                 return true;
@@ -99,7 +99,7 @@ public class Game extends JFrame implements ActionListener {
         currentColumn = Math.min(placedColumn + 3, 6);
         endColumn = Math.max(placedColumn - 3, 0);
         currentRow = startRow;
-        while (currentRow < endRow && currentColumn > endColumn) {
+        while (currentRow <= endRow && currentColumn >= endColumn) {
             inARowCounter = ((tileGrid[currentRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
             if (inARowCounter == 4) {
                 return true;
