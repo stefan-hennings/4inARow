@@ -20,7 +20,7 @@ public class GameBoardPanel extends JPanel implements ActionListener {
     }
 
     private void createButtons() {
-        for (int row = 0; row < 6; row++) {
+        for (int row = 5; row >= 0; row--) {
             for (int column = 0; column < 7; column++) {
                 buttons[row][column] = new JButton();
                 add(buttons[row][column]);
