@@ -22,6 +22,15 @@ public class User implements Serializable {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return userName;
+    }
+
+    public GameStats getGameStats() {
+        return gameStats;
+    }
+
     public String getPassword() {
         return password;
     }
