@@ -4,14 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Game extends JFrame implements ActionListener {
-    User redPlayer;
-    User yellowPlayer;
-    int tileCounter = 0;
-    int[][] tileGrid = new int[6][7];
-    boolean isRedTurn = true;
+    private User redPlayer;
+    private User yellowPlayer;
+    private int tileCounter = 0;
+    private final int[][] tileGrid = new int[6][7];
+    private boolean isRedTurn = true;
 
-    private LoginMenuPanel loginMenuPanel;
-    private GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
+    private final LoginMenuPanel loginMenuPanel;
+    private final GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
 
     public Game(LoginMenuPanel loginMenuPanel) {
         this.loginMenuPanel = loginMenuPanel;
@@ -154,4 +154,3 @@ public class Game extends JFrame implements ActionListener {
         }
     }
 }
-
