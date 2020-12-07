@@ -39,6 +39,7 @@ public class Game extends JFrame implements ActionListener {
                     return;
                 }
                 isRedTurn = !isRedTurn;
+                setTitle((isRedTurn ? "Röd" : "Gul") + " spelares tur");
                 return;
             }
         }
