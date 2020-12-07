@@ -13,6 +13,13 @@ public class Game extends JFrame implements ActionListener {
     private LoginMenuPanel loginMenuPanel;
     private GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
 
+    public static void main(String[] args) {
+        LoginMenuPanel loginMenuPanel = new LoginMenuPanel();
+        Game game = new Game(loginMenuPanel);
+        game.startGame();
+    }
+    
+
     public Game(LoginMenuPanel loginMenuPanel) {
         this.loginMenuPanel = loginMenuPanel;
         setVisible(true);
@@ -133,6 +140,7 @@ public class Game extends JFrame implements ActionListener {
             startGame();
         }
     }
+
 
     private void startGame() {
         remove(loginMenuPanel);
