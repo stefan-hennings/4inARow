@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameBoardPanel extends JPanel implements ActionListener {
-    ImageIcon imageIconWhiteTile;
-    ImageIcon imageIconRedTile;
-    ImageIcon imageIconYellowTile;
+    public static final ImageIcon WHITE_TILE = formatIcon(new ImageIcon("src\\images\\whiteDot.png"), 100,100);
+    public static final ImageIcon YELLOW_TILE = formatIcon(new ImageIcon("src\\images\\yellowTile.png"), 100, 100);
+    public static final ImageIcon RED_TILE = formatIcon(new ImageIcon("src\\images\\redTile.png"), 100, 100);
     JButton[][] buttons = new JButton[6][7];
 
     Game game;
@@ -25,8 +25,10 @@ public class GameBoardPanel extends JPanel implements ActionListener {
                 buttons[row][column] = new JButton();
                 add(buttons[row][column]);
                 buttons[row][column].addActionListener(game);
+                buttons[row][column].setBackground(Color.BLUE);
 //                button.setEnabled(false);
-                buttons[row][column].setBackground(Color.WHITE);
+                buttons[row][column].setIcon(WHITE_TILE);
+                buttons[row][column].setFocusPainted(false);
                 buttons[row][column].setBorder(BorderFactory.createLineBorder(Color.BLUE));
             }
         }
@@ -39,5 +41,14 @@ public class GameBoardPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    public static ImageIcon formatIcon(ImageIcon oldImageIcon, int width,
+                                int height) {
+        Image oldImage = oldImageIcon.getImage();
+        Image newImg = oldImage.getScaledInstance(width, height,
+                java.awt.Image.SCALE_SMOOTH);
+
+        return new ImageIcon(newImg);
     }
 }
