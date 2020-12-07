@@ -43,7 +43,12 @@ public class GameBoardPanel extends JPanel implements ActionListener {
 
     }
 
-    public static ImageIcon getRedYellow() {
-        return RED_TILE;
+    public static ImageIcon formatIcon(ImageIcon oldImageIcon, int width,
+                                int height) {
+        Image oldImage = oldImageIcon.getImage();
+        Image newImg = oldImage.getScaledInstance(width, height,
+                java.awt.Image.SCALE_SMOOTH);
+
+        return new ImageIcon(newImg);
     }
 }
