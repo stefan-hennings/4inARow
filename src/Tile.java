@@ -1,7 +1,7 @@
 
 public enum Tile {
 
-    RED(1), YELLOW(2), WHITE(0);
+    EMPTY(0), RED(1), YELLOW(2);
     private final int i;
 
     public int getI() {
