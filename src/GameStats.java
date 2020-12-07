@@ -40,4 +40,11 @@ public class GameStats implements Score, Serializable {
         return ties;
     }
 
+    @Override
+    public String toString() {
+        return "Wins=" + wins +
+                ", Losses=" + losses +
+                ", Ties=" + ties +
+                ", Win%=" + calculateWinPercent();
+    }
 }

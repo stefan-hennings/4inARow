@@ -128,6 +128,7 @@ public class Game extends JFrame implements ActionListener {
             yellowPlayer.getGameStats().addWin();
             redPlayer.getGameStats().addLoss();
         }
+
         // TODO: 04-Dec-20 show results screen
     }
 
@@ -161,6 +162,15 @@ public class Game extends JFrame implements ActionListener {
                 }
             }
         }
+    }
+
+    private void sleep(int millis){
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }
 

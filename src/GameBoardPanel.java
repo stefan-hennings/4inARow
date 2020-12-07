@@ -33,8 +33,6 @@ public class GameBoardPanel extends JPanel implements ActionListener {
         for (int row = 5; row >= 0; row--) {
             for (int column = 0; column < 7; column++) {
                 buttons[row][column] = new JButton();
-                buttonList.add(buttons[row][column]);
-                add(buttons[row][column]);
                 buttons[row][column].addActionListener(game);
                 buttons[row][column].setBackground(Color.BLUE);
                 buttons[row][column].addMouseListener(new MouseAdapter(){
@@ -44,12 +42,12 @@ public class GameBoardPanel extends JPanel implements ActionListener {
                         jButton.setRolloverIcon(game.isRedTurn ? RED_ARROW_TILE : YELLOW_ARROW_TILE);
                     }
                 });
-
-//                button.setEnabled(false);
                 buttons[row][column].setIcon(EMPTY_TILE);
                 buttons[row][column].setFocusPainted(false);
                 buttons[row][column].setContentAreaFilled(false);
                 buttons[row][column].setBorder(BorderFactory.createLineBorder(Color.BLUE));
+                buttonList.add(buttons[row][column]);
+                add(buttons[row][column]);
             }
         }
     }
