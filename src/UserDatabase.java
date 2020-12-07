@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Optional;
 
 public class UserDatabase {
     private static List<User> userList;
@@ -8,15 +9,19 @@ public class UserDatabase {
 
     }
 
-    public static void addToUserList(User user) {
-        userList.add(user);
-    }
-
     public static void save() {
 
     }
 
-    public static User getUser(String username, String password) {
-        return null;
+    public static void addToUserList(User user) {
+        userList.add(user);
+        save();
+    }
+
+    public static Optional<User> getUser(String userName, String password) {
+        return userList.stream()
+                .filter(user -> user.getUserName().equals(userName))
+                .filter (user -> user.getPassword().equals(password))
+                .findFirst();
     }
 }

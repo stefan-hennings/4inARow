@@ -1,4 +1,6 @@
-public class GameStats implements Score {
+import java.io.Serializable;
+
+public class GameStats implements Score, Serializable {
 
     private int wins = 0;
     private int losses = 0;
