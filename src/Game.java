@@ -43,12 +43,7 @@ public class Game extends JFrame implements ActionListener {
                 return;
             }
         }
-        for (int[] row : tileGrid) {
-            for (int col : row) {
-                System.out.print(" " + col);
-            }
-            System.out.println();
-        }
+        JOptionPane.showMessageDialog(this, "Kolumnen är redan full! Placera någon annanstans");
     }
 
     public boolean hasWon(int placedRow, int placedColumn) {
@@ -149,7 +144,6 @@ public class Game extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Action performed");
 
         for (int row = 0; row < 6; row++) {
             for (int column = 0; column < 7; column++) {
