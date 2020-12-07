@@ -55,9 +55,9 @@ public class Game extends JFrame implements ActionListener {
         int correctColor = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
 
         int startRow = Math.max(placedRow - 3, 0);
-        int endRow = Math.min(placedRow + 3, 7);
+        int endRow = Math.min(placedRow + 3, 5);
         int startColumn = Math.max(placedColumn - 3, 0);
-        int endColumn = Math.min(placedColumn + 3, 7);
+        int endColumn = Math.min(placedColumn + 3, 6);
 
         int currentRow;
         int currentColumn;
@@ -96,7 +96,7 @@ public class Game extends JFrame implements ActionListener {
         inARowCounter = 0;
 
         //Top left to bottom right win
-        currentColumn = Math.min(placedColumn + 3, 7);
+        currentColumn = Math.min(placedColumn + 3, 6);
         endColumn = Math.max(placedColumn - 3, 0);
         currentRow = startRow;
         while (currentRow < endRow && currentColumn > endColumn) {
@@ -112,6 +112,8 @@ public class Game extends JFrame implements ActionListener {
     }
 
     public void processResult() {
+        System.out.println("Player " + (isRedTurn ? "red" : "yellow") + " has won");
+
         if (tileCounter == 42) {
             redPlayer.getGameStats().addTie();
             yellowPlayer.getGameStats().addTie();
@@ -147,10 +149,11 @@ public class Game extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Action performed");
+
+//        placeTile(2);
+
         for (int row = 0; row < 6; row++) {
-            System.out.println("Checking row " + row);
             for (int column = 0; column < 7; column++) {
-                System.out.println("Checking column " + column);
                 if (e.getSource() == gameBoardPanel.getButtons()[row][column]) {
                     System.out.println("Button " + row + ", " + column + "detected");
                     placeTile(column);
