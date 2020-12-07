@@ -5,14 +5,14 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 
 public class LoginMenuPanel extends JPanel implements ActionListener {
-    JTextField userNameField = new JTextField("Enter username");
-    JTextField passwordField = new JTextField("Enter password");
-    JButton newUserButton = new JButton("Create new user");
-    JButton confirmLoginButton = new JButton("Log in");
+    private final JTextField userNameField = new JTextField("Enter username");
+    private final JTextField passwordField = new JTextField("Enter password");
+    private final JButton newUserButton = new JButton("Create new user");
+    private final JButton confirmLoginButton = new JButton("Log in");
 
-    JLabel outputLabel = new JLabel("Välkommen till världens bästa 4-i-rad spel!");
+    private final JLabel outputLabel = new JLabel("Välkommen till världens bästa 4-i-rad spel!");
 
-    Game game;
+    private final Game game;
 
 
     public LoginMenuPanel() {

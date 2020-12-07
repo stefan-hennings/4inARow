@@ -8,7 +8,7 @@ public enum Tile {
         return i;
     }
 
-    private Tile(int i) {
+    Tile(int i) {
         this.i = i;
     }
 }
