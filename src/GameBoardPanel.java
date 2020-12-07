@@ -20,14 +20,14 @@ public class GameBoardPanel extends JPanel implements ActionListener {
     }
 
     private void createButtons() {
-        for (JButton[] buttonRow : buttons) {
-            for (JButton button : buttonRow) {
-                button = new JButton();
-                add(button);
-                button.addActionListener(game);
+        for (int row = 0; row < 6; row++) {
+            for (int column = 0; column < 7; column++) {
+                buttons[row][column] = new JButton();
+                add(buttons[row][column]);
+                buttons[row][column].addActionListener(game);
 //                button.setEnabled(false);
-                button.setBackground(Color.WHITE);
-                button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                buttons[row][column].setBackground(Color.WHITE);
+                buttons[row][column].setBorder(BorderFactory.createLineBorder(Color.BLACK));
             }
         }
     }
