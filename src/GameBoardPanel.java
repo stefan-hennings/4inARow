@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameBoardPanel extends JPanel implements ActionListener {
-    ImageIcon imageIconWhiteTile;
-    ImageIcon imageIconRedTile;
-    ImageIcon imageIconYellowTile;
+    private ImageIcon whiteTile = SetSizeForTile.setSize(new ImageIcon("src/theGame/images/whiteDot.png"), 100,100);
+    private ImageIcon yellowTile = SetSizeForTile.setSize(new ImageIcon("src/theGame/images/yellowTile.png"), 100, 100);
+    private ImageIcon redYellow = SetSizeForTile.setSize(new ImageIcon("src/theGame/images/redTile.png"), 100, 100);
     JButton[][] buttons = new JButton[6][7];
 
     Game game;
@@ -24,9 +24,11 @@ public class GameBoardPanel extends JPanel implements ActionListener {
             for (JButton button : buttonRow) {
                 button = new JButton();
                 add(button);
+
                 button.addActionListener(game);
 //                button.setEnabled(false);
-                button.setBackground(Color.WHITE);
+                //button.setBackground(Color.WHITE);
+                button.setIcon(whiteTile);
                 button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             }
         }
@@ -40,4 +42,5 @@ public class GameBoardPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
     }
+
 }
