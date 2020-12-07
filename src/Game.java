@@ -42,6 +42,7 @@ public class Game extends JFrame implements ActionListener {
                 }
                 tileCounter++;
                 if (hasWon(row, column) || tileCounter == 42) {
+                    gameBoardPanel.buttonList.forEach(e -> e.removeActionListener(this));
                     processResult();
                     return;
                 }
