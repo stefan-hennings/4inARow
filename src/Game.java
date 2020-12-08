@@ -57,54 +57,56 @@ public class Game extends JFrame implements ActionListener {
         int currentRow;
         int currentColumn;
 
-        //Horizontal win
-        for (currentColumn = startColumn; currentColumn <= endColumn; currentColumn++) {
-            //Reset counter to 0 if the row of correct colors is broken
-            inARowCounter = tileGrid[placedRow][currentColumn] == correctColor ? inARowCounter + 1 : 0;
-            if (inARowCounter == 4) {
-                return true;
-            }
+        //Check left to right win
+        if (checkHorizontalWin(startColumn, endColumn, placedRow, correctColor)) {
+            return true;
         }
-        inARowCounter = 0;
 
-        //Vertical win
-        for (currentRow = startRow; currentRow <= endRow; currentRow++) {
-            inARowCounter = ((tileGrid[currentRow][placedColumn] == correctColor) ? inARowCounter + 1 : 0);
-            if (inARowCounter == 4) {
-                return true;
-            }
+        //Check bottom to top win
+        if (checkVerticalWin(startRow, endRow, placedColumn, correctColor)) {
+            return true;
         }
-        inARowCounter = 0;
-
-        //Bottom left to top right win
+/*
+        System.out.println("\n\nStarting left-up check");
         currentColumn = startColumn;
         currentRow = startRow;
-        while (currentRow <= endRow && currentColumn <= endColumn) {
-            inARowCounter = ((tileGrid[currentRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
-            if (inARowCounter == 4) {
-                return true;
-            }
-            currentColumn++;
-            currentRow++;
-        }
-        inARowCounter = 0;
 
+        int columnDifference = currentColumn - placedColumn;
+        int rowDifference =  currentRow - placedRow;
+        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
+
+        int differenceDifference = columnDifference - rowDifference;
+        System.out.println(differenceDifference);
+
+        if (differenceDifference < 0) currentColumn -= differenceDifference;
+*/
+        //Check top left to bottom right win
+        if (checkLeftUpWin(startRow, endRow, startColumn, endColumn,
+                placedRow, placedColumn, correctColor)) {
+            return true;
+        }
+        //Check bottom left to top right win
+        if (checkLeftDownWin(startRow, endRow, startColumn, endColumn,
+                placedRow, placedColumn, correctColor)) {
+            return true;
+        }
+/*
         //Top left to bottom right win
-        currentColumn = startColumn; //endcolumn
-        currentRow = Math.min(placedRow + 3, 5); //startrow
+        currentColumn = startColumn;
+        currentRow = endRow;
         endRow = startRow;
 
-        if (placedRow > 2) {
-            int tooMuch = placedRow + 2;
-            currentColumn += tooMuch;
-        }
+        columnDifference = currentColumn - placedColumn;
+        rowDifference =  placedRow - currentRow;
+        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
 
-//        int startRow = Math.max(placedRow - 3, 0);
-//        int endRow = Math.min(placedRow + 3, 5);
-//        int startColumn = Math.max(placedColumn - 3, 0);
-//        int endColumn = Math.min(placedColumn + 3, 6);
+        differenceDifference = columnDifference - rowDifference;
+        System.out.println(differenceDifference);
 
-        System.out.println("\n\nStarting diagonal check");
+        if (differenceDifference > 0) currentRow -= differenceDifference;
+        else currentColumn -= differenceDifference;
+
+        System.out.println("\n\nStarting left-down check");
         while (currentRow >= endRow && currentColumn <= endColumn) {
             inARowCounter = ((tileGrid[currentRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
             System.out.printf("Checking tile %d, %d%n", currentRow, currentColumn);
@@ -113,6 +115,85 @@ public class Game extends JFrame implements ActionListener {
             }
             currentColumn++;
             currentRow--;
+        }*/
+        return false;
+    }
+
+    private boolean checkHorizontalWin(int startColumn, int endColumn, int placedRow, int correctColor) {
+        int inARowCounter = 0;
+        for (int currentColumn = startColumn; currentColumn <= endColumn; currentColumn++) {
+            inARowCounter = tileGrid[placedRow][currentColumn] == correctColor ? inARowCounter + 1 : 0;
+            if (inARowCounter == 4) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkVerticalWin(int startRow, int endRow, int placedColumn, int correctColor) {
+        int inARowCounter = 0;
+        for (int currentRow = startRow; currentRow <= endRow; currentRow++) {
+            inARowCounter = tileGrid[currentRow][placedColumn] == correctColor ? inARowCounter + 1 : 0;
+            if (inARowCounter == 4) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkLeftUpWin(int currentRow, int endRow, int currentColumn, int endColumn,
+                                   int placedRow, int placedColumn, int correctColor) {
+        int inARowCounter = 0;
+
+        System.out.println("\n\nStarting left-up check");
+
+        int columnDifference = currentColumn - placedColumn;
+        int rowDifference =  currentRow - placedRow;
+        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
+
+        int differenceDifference = columnDifference - rowDifference;
+        System.out.println(differenceDifference);
+
+        if (differenceDifference < 0) currentColumn -= differenceDifference;
+
+
+        while (currentRow <= endRow && currentColumn <= endColumn) {
+            System.out.printf("Checking tile %d, %d%n", currentRow, currentColumn);
+            inARowCounter = ((tileGrid[currentRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
+            if (inARowCounter == 4) {
+                return true;
+            }
+            currentColumn++;
+            currentRow++;
+        }
+        return false;
+    }
+
+    private boolean checkLeftDownWin(int lowRow, int highRow, int lowColumn, int highColumn,
+                                     int placedRow, int placedColumn, int correctColor) {
+        int inARowCounter = 0;
+//        int currentColumn = lowColumn;
+//        currentRow = highRow;
+//        highRow = lowRow;
+
+        int columnDifference = lowColumn - placedColumn;
+        int rowDifference = placedRow - highRow;
+        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
+
+        int differenceDifference = columnDifference - rowDifference;
+        System.out.println(differenceDifference);
+
+        if (differenceDifference > 0) highRow -= differenceDifference;
+        else lowColumn -= differenceDifference;
+
+        while (highRow >= lowRow && lowColumn <= highColumn) {
+            inARowCounter = ((tileGrid[highRow][lowColumn] == correctColor) ? inARowCounter + 1 : 0);
+            System.out.printf("Checking tile %d, %d%n", highRow, lowColumn);
+            if (inARowCounter == 4) {
+                return true;
+            }
+            lowColumn++;
+            highRow--;
         }
         return false;
     }
