@@ -56,11 +56,6 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
         outputLabel.setText("Felaktigt användarnamn eller lösenord, försök igen");
     }
 
-    public static void main(String[] args) {
-        UserDatabase.load();
-        new LoginMenuPanel();
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newUserButton) {

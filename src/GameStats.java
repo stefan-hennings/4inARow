@@ -6,11 +6,11 @@ public class GameStats implements Score, Serializable {
     private int wins;
     private int losses;
     private int ties;
-    DecimalFormat d = new DecimalFormat("#.##");
+    DecimalFormat twoDecimal = new DecimalFormat("#.##");
 
     @Override
-    public String calculateWinPercent() {
-        return d.format((double)wins/(wins + losses + ties)*100)+"%";
+    public String getWinPercentageString() {
+        return twoDecimal.format((double)wins/(wins + losses + ties)*100)+"%";
     }
 
     @Override
@@ -34,6 +34,6 @@ public class GameStats implements Score, Serializable {
 
     @Override
     public String toString() {
-        return String.format("| Vinster: %d, förluster: %d, oavgjorda: %d, vinstprocent: %s", wins, losses, ties, calculateWinPercent());
+        return String.format("| Vinster: %d, förluster: %d, oavgjorda: %d, vinstprocent: %s", wins, losses, ties, getWinPercentageString());
     }
 }
