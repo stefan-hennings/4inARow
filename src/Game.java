@@ -12,16 +12,18 @@ public class Game extends JFrame implements ActionListener {
 
     private final LoginMenuPanel loginMenuPanel;
     private final GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
+    private final HighScorePanel highScorePanel = new HighScorePanel();
 
     public Game(LoginMenuPanel loginMenuPanel) {
         this.loginMenuPanel = loginMenuPanel;
-        setVisible(true);
         setLayout(new BorderLayout());
         add(BorderLayout.CENTER, loginMenuPanel);
-//        setLocationRelativeTo(null);
+        setTitle("Logga in spelare 1");
         setSize(new Dimension(1000, 800));
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     public void placeTile(int column) {
@@ -32,13 +34,10 @@ public class Game extends JFrame implements ActionListener {
 
                 tileCounter++;
                 if (hasWon(row, column) || tileCounter == 42) {
-                    // flytta till process
-                    gameBoardPanel.buttonList.forEach(e -> e.removeActionListener(this));
                     processResult();
                     return;
                 }
                 isRedTurn = !isRedTurn;
-                setTitle((isRedTurn ? "Röd" : "Gul") + " spelares tur");
                 return;
             }
         }
@@ -117,7 +116,18 @@ public class Game extends JFrame implements ActionListener {
             yellowPlayer.getGameStats().addWin();
             redPlayer.getGameStats().addLoss();
         }
+        gameBoardPanel.buttonList.forEach(e -> e.removeActionListener(this));
         UserDatabase.save();
+        int choice = JOptionPane.showConfirmDialog(this, "Spelet är slut vill du se highscore?");
+        if (choice == 0){
+            remove(gameBoardPanel);
+            highScorePanel.updateScorePanel();
+            add(highScorePanel);
+            repaint();
+        }else {
+            System.exit(0);
+        }
+
 
         // TODO: 04-Dec-20 show results screen
     }
@@ -125,8 +135,10 @@ public class Game extends JFrame implements ActionListener {
     public void addUser(User user) {
         if ((redPlayer == null)) {
             redPlayer = user;
+            setTitle("Logga in spelare 2");
         } else {
             yellowPlayer = user;
+            setTitle("4 i rad");
             startGame();
         }
     }
@@ -155,6 +167,10 @@ public class Game extends JFrame implements ActionListener {
             e.printStackTrace();
         }
 
+    }
+
+    public boolean isRedTurn() {
+        return isRedTurn;
     }
 }
 

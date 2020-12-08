@@ -9,8 +9,8 @@ import java.util.List;
 public class HighScorePanel extends JPanel {
 
     // TestList
-    List<User> users = new ArrayList<>();
-    User user1 = new User().setUserName("Oscar");
+    List<User> users;
+    /*User user1 = new User().setUserName("Oscar");
     User user2 = new User().setUserName("Patrik");
     User user3 = new User().setUserName("Stefan");
     User user4 = new User().setUserName("Stefan");
@@ -19,7 +19,7 @@ public class HighScorePanel extends JPanel {
     User user7 = new User().setUserName("Stefan");
     User user8 = new User().setUserName("Stefan");
     User user9 = new User().setUserName("Stefan");
-    User user10 = new User().setUserName("Stefan");
+    User user10 = new User().setUserName("Stefan");*/
 
     private final int witdh = 500;
     private final int higth = 800;
@@ -30,7 +30,7 @@ public class HighScorePanel extends JPanel {
     }
 
     public HighScorePanel() {
-        user1.getGameStats().addWin();
+        /*user1.getGameStats().addWin();
         user1.getGameStats().addWin();
         user1.getGameStats().addLoss();
         user2.getGameStats().addWin();
@@ -51,7 +51,7 @@ public class HighScorePanel extends JPanel {
         users.add(user1);
         users.add(user2);
         users.add(user3);
-        /*users.add(user4);
+        users.add(user4);
         users.add(user5);
         users.add(user6);
         users.add(user7);
@@ -59,15 +59,15 @@ public class HighScorePanel extends JPanel {
         users.add(user9);
         users.add(user10);*/
 
-        sortListByWins(users);
+        users = sortListByWins(UserDatabase.getUserList());
 
         users.forEach(e -> System.out.println(e.getGameStats().toString()));
 
-        JFrame jFrame = new JFrame();
+        /*JFrame jFrame = new JFrame();
         jFrame.add(this);
         jFrame.setResizable(false);
         jFrame.setSize(witdh, higth);
-        jFrame.setVisible(true);
+        jFrame.setVisible(true);*/
 
         int j = 1;
         for (User value : users) {
@@ -77,6 +77,20 @@ public class HighScorePanel extends JPanel {
             add(jLabel);
             j++;
         }
+    }
+
+    public void updateScorePanel(){
+        users = sortListByWins(UserDatabase.getUserList());
+
+        int j = 1;
+        for (User value : users) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(j).append(": ").append(value.getUserName()).append(" ").append(value.getGameStats().toString()).append("\n");
+            JLabel jLabel = new JLabel(sb.toString());
+            add(jLabel);
+            j++;
+        }
+
     }
 
     private List<User> sortListByWins(List<User> users) {

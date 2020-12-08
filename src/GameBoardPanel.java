@@ -37,7 +37,7 @@ public class GameBoardPanel extends JPanel implements ActionListener {
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         JButton jButton = (JButton) e.getSource();
-                        jButton.setRolloverIcon(game.isRedTurn ? RED_ARROW_TILE : YELLOW_ARROW_TILE);
+                        jButton.setRolloverIcon(game.isRedTurn() ? RED_ARROW_TILE : YELLOW_ARROW_TILE);
                     }
                 });
                 buttons[row][column].setIcon(EMPTY_TILE);
