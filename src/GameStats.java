@@ -32,10 +32,6 @@ public class GameStats implements Score, Serializable {
         return wins;
     }
 
-    public int getLosses() {
-        return losses;
-    }
-
     @Override
     public String toString() {
         return String.format("| Vinster: %d, förluster: %d, oavgjorda: %d, vinstprocent: %s", wins, losses, ties, calculateWinPercent());
