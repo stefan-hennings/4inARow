@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
-import java.util.List;
 
 public class Game extends JFrame implements ActionListener {
     private User redPlayer;
@@ -46,7 +45,6 @@ public class Game extends JFrame implements ActionListener {
     }
 
     public boolean hasWon(int placedRow, int placedColumn) {
-        int inARowCounter = 0;
         int correctColor = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
 
         int startRow = Math.max(placedRow - 3, 0);
@@ -171,9 +169,6 @@ public class Game extends JFrame implements ActionListener {
     private boolean checkLeftDownWin(int lowRow, int highRow, int lowColumn, int highColumn,
                                      int placedRow, int placedColumn, int correctColor) {
         int inARowCounter = 0;
-//        int currentColumn = lowColumn;
-//        currentRow = highRow;
-//        highRow = lowRow;
 
         int columnDifference = lowColumn - placedColumn;
         int rowDifference = placedRow - highRow;
@@ -210,7 +205,7 @@ public class Game extends JFrame implements ActionListener {
             yellowPlayer.getGameStats().addWin();
             redPlayer.getGameStats().addLoss();
         }
-        gameBoardPanel.buttonList.forEach(e -> e.removeActionListener(this));
+        gameBoardPanel.getButtonList().forEach(e -> e.removeActionListener(this));
         UserDatabase.save();
         JOptionPane.showMessageDialog(this, getHighScoreString(), "Highscore", JOptionPane.INFORMATION_MESSAGE);
 

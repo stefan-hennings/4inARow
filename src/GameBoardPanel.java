@@ -12,10 +12,10 @@ public class GameBoardPanel extends JPanel {
     public static final ImageIcon RED_TILE = formatIcon(new ImageIcon("src\\images\\redTile.png"), 100, 100);
     public static final ImageIcon RED_ARROW_TILE = formatIcon(new ImageIcon("src\\images\\redArrowTile.png"), 100, 100);
 
-    JButton[][] buttons = new JButton[6][7];
-    List<JButton> buttonList = new ArrayList<>();
+    private final JButton[][] buttons = new JButton[6][7];
+    private final List<JButton> buttonList = new ArrayList<>();
 
-    Game game;
+    private final Game game;
 
     public GameBoardPanel(Game game) {
         this.game = game;
@@ -59,5 +59,9 @@ public class GameBoardPanel extends JPanel {
                 java.awt.Image.SCALE_SMOOTH);
 
         return new ImageIcon(newImg);
+    }
+
+    public List<JButton> getButtonList() {
+        return buttonList;
     }
 }
