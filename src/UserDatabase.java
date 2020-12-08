@@ -43,4 +43,8 @@ public class UserDatabase {
                 .filter (user -> user.getPassword().equals(password))
                 .findFirst();
     }
+
+    public static List<User> getUserList() {
+        return userList;
+    }
 }

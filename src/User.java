@@ -44,15 +44,15 @@ public class User implements Serializable {
         User user = new User()
                 .setUserName("Oscar")
                 .setPassword("test");
-
         user.gameStats.addWin();
         user.gameStats.addLoss();
-
-        System.out.println(user);
-
+        user.gameStats.addTie();
+        user.gameStats.addLoss();
         System.out.println(user.gameStats.getWins());
         System.out.println(user.gameStats.getLosses());
-        System.out.println(user.gameStats.calculateWinPercentage());
+
+        System.out.println(user.getUserName() + " " + user.getPassword() + " " + user.gameStats.calculateWinPercent());
+
     }
 }
 

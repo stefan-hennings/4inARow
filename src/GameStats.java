@@ -1,14 +1,16 @@
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 public class GameStats implements Score, Serializable {
 
-    private int wins = 0;
-    private int losses = 0;
-    private int ties = 0;
+    private double wins;
+    private double losses;
+    private double ties;
+    DecimalFormat d = new DecimalFormat("#.##");
 
     @Override
-    public double calculateWinPercentage() {
-        return 100.0 * wins / (wins + losses);
+    public String calculateWinPercent() {
+        return d.format(wins/(wins + losses + ties)*100)+"%";
     }
 
     @Override
@@ -26,16 +28,23 @@ public class GameStats implements Score, Serializable {
         this.ties++;
     }
 
-    public int getWins() {
+    public double getWins() {
         return wins;
     }
 
-    public int getLosses() {
+    public double getLosses() {
         return losses;
     }
 
-    public int getDraws() {
+    public double getDraws() {
         return ties;
     }
 
+    @Override
+    public String toString() {
+        return "Wins=" + wins +
+                ", Losses=" + losses +
+                ", Ties=" + ties +
+                ", Win%=" + calculateWinPercent();
+    }
 }

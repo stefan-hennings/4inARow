@@ -1,7 +1,7 @@
 
 public interface Score {
 
-    double calculateWinPercentage();
+    String calculateWinPercent();
     void addWin();
     void addLoss();
     void addTie();

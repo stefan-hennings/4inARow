@@ -44,6 +44,7 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
         Optional<User> userOptional;
         userOptional = UserDatabase.getUser(userNameField.getText(), passwordField.getText());
         userOptional.ifPresentOrElse(this::loginSuccessful, this::loginFail);
+
     }
 
     void loginSuccessful(User user) {
