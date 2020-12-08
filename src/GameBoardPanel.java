@@ -1,13 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameBoardPanel extends JPanel implements ActionListener {
+public class GameBoardPanel extends JPanel {
     public static final ImageIcon EMPTY_TILE = formatIcon(new ImageIcon("src\\images\\emptyTile.png"), 100,100);
     public static final ImageIcon YELLOW_TILE = formatIcon(new ImageIcon("src\\images\\yellowTile.png"), 100, 100);
     public static final ImageIcon YELLOW_ARROW_TILE = formatIcon(new ImageIcon("src\\images\\yellowArrowTile.png"), 100, 100);
@@ -52,11 +50,6 @@ public class GameBoardPanel extends JPanel implements ActionListener {
 
     public JButton[][] getButtons() {
         return buttons;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 
     public static ImageIcon formatIcon(ImageIcon oldImageIcon, int width,
