@@ -90,11 +90,24 @@ public class Game extends JFrame implements ActionListener {
         inARowCounter = 0;
 
         //Top left to bottom right win
-        currentColumn = startColumn;
-        currentRow = endRow;
+        currentColumn = startColumn; //endcolumn
+        currentRow = Math.min(placedRow + 3, 5); //startrow
         endRow = startRow;
+
+        if (placedRow > 2) {
+            int tooMuch = placedRow + 2;
+            currentColumn += tooMuch;
+        }
+
+//        int startRow = Math.max(placedRow - 3, 0);
+//        int endRow = Math.min(placedRow + 3, 5);
+//        int startColumn = Math.max(placedColumn - 3, 0);
+//        int endColumn = Math.min(placedColumn + 3, 6);
+
+        System.out.println("\n\nStarting diagonal check");
         while (currentRow >= endRow && currentColumn <= endColumn) {
             inARowCounter = ((tileGrid[currentRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
+            System.out.printf("Checking tile %d, %d%n", currentRow, currentColumn);
             if (inARowCounter == 4) {
                 return true;
             }
