@@ -121,7 +121,7 @@ public class Game extends JFrame implements ActionListener {
         UserDatabase.save();
         JOptionPane.showMessageDialog(this, getHighScoreString(), "Highscore", JOptionPane.INFORMATION_MESSAGE);
 
-        // TODO: 04-Dec-20 show results screen
+        System.exit(0);
     }
 
     public void addUser(User user) {
