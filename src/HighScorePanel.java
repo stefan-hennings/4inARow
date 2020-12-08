@@ -51,13 +51,13 @@ public class HighScorePanel extends JPanel {
         users.add(user1);
         users.add(user2);
         users.add(user3);
-        users.add(user4);
+        /*users.add(user4);
         users.add(user5);
         users.add(user6);
         users.add(user7);
         users.add(user8);
         users.add(user9);
-        users.add(user10);
+        users.add(user10);*/
 
         sortListByWins(users);
 
@@ -68,6 +68,7 @@ public class HighScorePanel extends JPanel {
         jFrame.setResizable(false);
         jFrame.setSize(witdh, higth);
         jFrame.setVisible(true);
+
         int j = 1;
         for (User value : users) {
             StringBuilder sb = new StringBuilder();
@@ -76,7 +77,6 @@ public class HighScorePanel extends JPanel {
             add(jLabel);
             j++;
         }
-
     }
 
     private List<User> sortListByWins(List<User> users) {
@@ -89,6 +89,4 @@ public class HighScorePanel extends JPanel {
         }
         return users;
     }
-
-
 }

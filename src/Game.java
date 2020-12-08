@@ -37,9 +37,6 @@ public class Game extends JFrame implements ActionListener {
                 tileGrid[row][column] = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
                 gameBoardPanel.getButtons()[row][column].setIcon(isRedTurn ? GameBoardPanel.RED_TILE : GameBoardPanel.YELLOW_TILE);
 
-                if (row < 5) {
-                    gameBoardPanel.getButtons()[row+1][column].setEnabled(true);
-                }
                 tileCounter++;
                 if (hasWon(row, column) || tileCounter == 42) {
                     gameBoardPanel.buttonList.forEach(e -> e.removeActionListener(this));
@@ -73,7 +70,6 @@ public class Game extends JFrame implements ActionListener {
             if (inARowCounter == 4) {
                 return true;
             }
-
         }
         inARowCounter = 0;
 
@@ -111,7 +107,6 @@ public class Game extends JFrame implements ActionListener {
             currentColumn--;
             currentRow++;
         }
-
         return false;
     }
 
@@ -128,6 +123,7 @@ public class Game extends JFrame implements ActionListener {
             yellowPlayer.getGameStats().addWin();
             redPlayer.getGameStats().addLoss();
         }
+        UserDatabase.save();
 
         // TODO: 04-Dec-20 show results screen
     }
@@ -145,16 +141,11 @@ public class Game extends JFrame implements ActionListener {
     private void startGame() {
         remove(loginMenuPanel);
         add(gameBoardPanel);
-        for (int i = 0; i < 7; i++) {
-            System.out.println("Enabling " + i);
-//            gameBoardPanel.getButtons()[0][i].setEnabled(true);
-        }
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         for (int row = 0; row < 6; row++) {
             for (int column = 0; column < 7; column++) {
                 if (e.getSource() == gameBoardPanel.getButtons()[row][column]) {

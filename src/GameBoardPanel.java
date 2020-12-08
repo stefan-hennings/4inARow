@@ -14,10 +14,8 @@ public class GameBoardPanel extends JPanel implements ActionListener {
     public static final ImageIcon RED_TILE = formatIcon(new ImageIcon("src\\images\\redTile.png"), 100, 100);
     public static final ImageIcon RED_ARROW_TILE = formatIcon(new ImageIcon("src\\images\\redArrowTile.png"), 100, 100);
 
-
     JButton[][] buttons = new JButton[6][7];
     List<JButton> buttonList = new ArrayList<>();
-    public MouseAdapter mouseAdapter;
 
     Game game;
 
