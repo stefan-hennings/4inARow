@@ -90,16 +90,16 @@ public class Game extends JFrame implements ActionListener {
         inARowCounter = 0;
 
         //Top left to bottom right win
-        currentColumn = Math.min(placedColumn + 3, 6);
-        endColumn = Math.max(placedColumn - 3, 0);
-        currentRow = startRow;
-        while (currentRow <= endRow && currentColumn >= endColumn) {
+        currentColumn = startColumn;
+        currentRow = endRow;
+        endRow = startRow;
+        while (currentRow >= endRow && currentColumn <= endColumn) {
             inARowCounter = ((tileGrid[currentRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
             if (inARowCounter == 4) {
                 return true;
             }
-            currentColumn--;
-            currentRow++;
+            currentColumn++;
+            currentRow--;
         }
         return false;
     }
