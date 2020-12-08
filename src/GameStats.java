@@ -3,14 +3,14 @@ import java.text.DecimalFormat;
 
 public class GameStats implements Score, Serializable {
 
-    private double wins;
-    private double losses;
-    private double ties;
+    private int wins;
+    private int losses;
+    private int ties;
     DecimalFormat d = new DecimalFormat("#.##");
 
     @Override
     public String calculateWinPercent() {
-        return d.format(wins/(wins + losses + ties)*100)+"%";
+        return d.format((double)wins/(wins + losses + ties)*100)+"%";
     }
 
     @Override
@@ -28,23 +28,16 @@ public class GameStats implements Score, Serializable {
         this.ties++;
     }
 
-    public double getWins() {
+    public int getWins() {
         return wins;
     }
 
-    public double getLosses() {
+    public int getLosses() {
         return losses;
-    }
-
-    public double getDraws() {
-        return ties;
     }
 
     @Override
     public String toString() {
-        return "Wins=" + wins +
-                ", Losses=" + losses +
-                ", Ties=" + ties +
-                ", Win%=" + calculateWinPercent();
+        return String.format("| Vinster: %d, förluster: %d, oavgjorda: %d, vinstprocent: %s", wins, losses, ties, calculateWinPercent());
     }
 }

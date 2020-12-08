@@ -28,9 +28,9 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
     }
 
     void createUser() {
-        User user = new User();
-        user.setUserName(userNameField.getText().trim());
-        user.setPassword(passwordField.getText().trim());
+        User user = new User()
+                .setUserName(userNameField.getText().trim())
+                .setPassword(passwordField.getText().trim());
 
         try {
             UserDatabase.addUser(user);

@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
+import java.util.List;
 
 public class Game extends JFrame implements ActionListener {
     private User redPlayer;
@@ -12,7 +14,6 @@ public class Game extends JFrame implements ActionListener {
 
     private final LoginMenuPanel loginMenuPanel;
     private final GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
-    private final HighScorePanel highScorePanel = new HighScorePanel();
 
     public Game(LoginMenuPanel loginMenuPanel) {
         this.loginMenuPanel = loginMenuPanel;
@@ -118,16 +119,7 @@ public class Game extends JFrame implements ActionListener {
         }
         gameBoardPanel.buttonList.forEach(e -> e.removeActionListener(this));
         UserDatabase.save();
-        int choice = JOptionPane.showConfirmDialog(this, "Spelet är slut vill du se highscore?");
-        if (choice == 0){
-            remove(gameBoardPanel);
-            highScorePanel.updateScorePanel();
-            add(highScorePanel);
-            repaint();
-        }else {
-            System.exit(0);
-        }
-
+        JOptionPane.showMessageDialog(this, getHighScoreString(), "Highscore", JOptionPane.INFORMATION_MESSAGE);
 
         // TODO: 04-Dec-20 show results screen
     }
@@ -160,17 +152,21 @@ public class Game extends JFrame implements ActionListener {
         }
     }
 
-    private void sleep(int millis){
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public boolean isRedTurn() {
         return isRedTurn;
+    }
+
+    public String getHighScoreString(){
+        List<User> sortedUsers = UserDatabase.getUserList();
+        sortedUsers.sort(Collections.reverseOrder());
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < Math.min(sortedUsers.size(), 10); i++) {
+            if (sortedUsers.get(i).getGameStats().getWins() == 0) {
+                break;
+            }
+            sb.append(i+1).append(": ").append(sortedUsers.get(i).getUserName()).append(" ").append(sortedUsers.get(i).getGameStats().toString()).append("\n");
+        }
+        return sb.toString();
     }
 }
 
