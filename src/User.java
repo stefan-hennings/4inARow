@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class User implements Serializable, Comparable<User> {
 
     // Design pattern Fluent interface
 
@@ -40,19 +40,10 @@ public class User implements Serializable {
         return this;
     }
 
-    public static void main(String[] args) {
-        User user = new User()
-                .setUserName("Oscar")
-                .setPassword("test");
 
-        user.gameStats.addWin();
-        user.gameStats.addLoss();
-
-        System.out.println(user);
-
-        System.out.println(user.gameStats.getWins());
-        System.out.println(user.gameStats.getLosses());
-        System.out.println(user.gameStats.calculateWinPercentage());
+    @Override
+    public int compareTo(User o) {
+        return gameStats.getWins() - o.gameStats.getWins();
     }
 }
 

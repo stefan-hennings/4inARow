@@ -2,26 +2,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
+import java.util.List;
 
 public class Game extends JFrame implements ActionListener {
-    User redPlayer;
-    User yellowPlayer;
-    int tileCounter = 0;
-    int[][] tileGrid = new int[6][7];
-    boolean isRedTurn = true;
+    private User redPlayer;
+    private User yellowPlayer;
+    private int tileCounter = 0;
+    private final int[][] tileGrid = new int[6][7];
+    private boolean isRedTurn = true;
+    private boolean isTied = false;
 
-    private LoginMenuPanel loginMenuPanel;
-    private GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
+    private final LoginMenuPanel loginMenuPanel;
+    private final GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
 
     public Game(LoginMenuPanel loginMenuPanel) {
         this.loginMenuPanel = loginMenuPanel;
-        setVisible(true);
         setLayout(new BorderLayout());
         add(BorderLayout.CENTER, loginMenuPanel);
-//        setLocationRelativeTo(null);
+        setTitle("Logga in spelare 1");
         setSize(new Dimension(1000, 800));
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        repaint();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     public void placeTile(int column) {
@@ -30,16 +34,14 @@ public class Game extends JFrame implements ActionListener {
                 tileGrid[row][column] = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
                 gameBoardPanel.getButtons()[row][column].setIcon(isRedTurn ? GameBoardPanel.RED_TILE : GameBoardPanel.YELLOW_TILE);
 
-                if (row < 5) {
-                    gameBoardPanel.getButtons()[row+1][column].setEnabled(true);
-                }
                 tileCounter++;
-                if (hasWon(row, column) || tileCounter == 42) {
+                if (hasWon(row, column)) {
                     processResult();
                     return;
+                } else if (tileCounter == 42) {
+                    isTied = true;
                 }
                 isRedTurn = !isRedTurn;
-                setTitle((isRedTurn ? "Röd" : "Gul") + " spelares tur");
                 return;
             }
         }
@@ -47,7 +49,6 @@ public class Game extends JFrame implements ActionListener {
     }
 
     public boolean hasWon(int placedRow, int placedColumn) {
-        int inARowCounter = 0;
         int correctColor = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
 
         int startRow = Math.max(placedRow - 3, 0);
@@ -55,62 +56,150 @@ public class Game extends JFrame implements ActionListener {
         int startColumn = Math.max(placedColumn - 3, 0);
         int endColumn = Math.min(placedColumn + 3, 6);
 
-        int currentRow;
-        int currentColumn;
-
-        //Horizontal win
-        for (currentColumn = startColumn; currentColumn <= endColumn; currentColumn++) {
-            //Reset counter to 0 if the row of correct colors is broken
-            inARowCounter = tileGrid[placedRow][currentColumn] == correctColor ? inARowCounter + 1 : 0;
-            if (inARowCounter == 4) {
-                return true;
-            }
-
+        //Check left to right win
+        if (checkHorizontalWin(startColumn, endColumn, placedRow, correctColor)) {
+            return true;
         }
-        inARowCounter = 0;
 
-        //Vertical win
-        for (currentRow = startRow; currentRow <= endRow; currentRow++) {
-            inARowCounter = ((tileGrid[currentRow][placedColumn] == correctColor) ? inARowCounter + 1 : 0);
-            if (inARowCounter == 4) {
-                return true;
-            }
+        //Check bottom to top win
+        if (checkVerticalWin(startRow, endRow, placedColumn, correctColor)) {
+            return true;
         }
-        inARowCounter = 0;
-
-        //Bottom left to top right win
+/*
+        System.out.println("\n\nStarting left-up check");
         currentColumn = startColumn;
         currentRow = startRow;
-        while (currentRow <= endRow && currentColumn <= endColumn) {
+
+        int columnDifference = currentColumn - placedColumn;
+        int rowDifference =  currentRow - placedRow;
+        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
+
+        int differenceDifference = columnDifference - rowDifference;
+        System.out.println(differenceDifference);
+
+        if (differenceDifference < 0) currentColumn -= differenceDifference;
+*/
+        //Check top left to bottom right win
+        if (checkLeftUpWin(startRow, endRow, startColumn, endColumn,
+                placedRow, placedColumn, correctColor)) {
+            return true;
+        }
+        //Check bottom left to top right win
+        if (checkLeftDownWin(startRow, endRow, startColumn, endColumn,
+                placedRow, placedColumn, correctColor)) {
+            return true;
+        }
+/*
+        //Top left to bottom right win
+        currentColumn = startColumn;
+        currentRow = endRow;
+        endRow = startRow;
+
+        columnDifference = currentColumn - placedColumn;
+        rowDifference =  placedRow - currentRow;
+        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
+
+        differenceDifference = columnDifference - rowDifference;
+        System.out.println(differenceDifference);
+
+        if (differenceDifference > 0) currentRow -= differenceDifference;
+        else currentColumn -= differenceDifference;
+
+        System.out.println("\n\nStarting left-down check");
+        while (currentRow >= endRow && currentColumn <= endColumn) {
             inARowCounter = ((tileGrid[currentRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
+            System.out.printf("Checking tile %d, %d%n", currentRow, currentColumn);
             if (inARowCounter == 4) {
                 return true;
             }
             currentColumn++;
-            currentRow++;
-        }
-        inARowCounter = 0;
+            currentRow--;
+        }*/
+        return false;
+    }
 
-        //Top left to bottom right win
-        currentColumn = Math.min(placedColumn + 3, 6);
-        endColumn = Math.max(placedColumn - 3, 0);
-        currentRow = startRow;
-        while (currentRow <= endRow && currentColumn >= endColumn) {
-            inARowCounter = ((tileGrid[currentRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
+    private boolean checkHorizontalWin(int lowColumn, int highColumn, int placedRow, int correctColor) {
+        int inARowCounter = 0;
+        while (lowColumn <= highColumn) {
+            inARowCounter = tileGrid[placedRow][lowColumn] == correctColor ? inARowCounter + 1 : 0;
             if (inARowCounter == 4) {
                 return true;
             }
-            currentColumn--;
-            currentRow++;
+            lowColumn++;
         }
+        return false;
+    }
 
+    private boolean checkVerticalWin(int lowRow, int highRow, int placedColumn, int correctColor) {
+        int inARowCounter = 0;
+        while (lowRow <= highRow) {
+            inARowCounter = tileGrid[lowRow][placedColumn] == correctColor ? inARowCounter + 1 : 0;
+            if (inARowCounter == 4) {
+                return true;
+            }
+            lowRow++;
+        }
+        return false;
+    }
+
+    private boolean checkLeftUpWin(int lowRow, int highRow, int lowColumn, int highColumn,
+                                   int placedRow, int placedColumn, int correctColor) {
+        int inARowCounter = 0;
+
+        System.out.println("\n\nStarting left-up check");
+
+        int columnDifference = lowColumn - placedColumn;
+        int rowDifference =  lowRow - placedRow;
+        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
+
+        int differenceDifference = columnDifference - rowDifference;
+        System.out.println(differenceDifference);
+
+        if (differenceDifference < 0) lowColumn -= differenceDifference;
+
+
+        while (lowRow <= highRow && lowColumn <= highColumn) {
+            System.out.printf("Checking tile %d, %d%n", lowRow, lowColumn);
+            inARowCounter = ((tileGrid[lowRow][lowColumn] == correctColor) ? inARowCounter + 1 : 0);
+            if (inARowCounter == 4) {
+                return true;
+            }
+            lowColumn++;
+            lowRow++;
+        }
+        return false;
+    }
+
+    private boolean checkLeftDownWin(int lowRow, int highRow, int lowColumn, int highColumn,
+                                     int placedRow, int placedColumn, int correctColor) {
+        int inARowCounter = 0;
+
+        int columnDifference = lowColumn - placedColumn;
+        int rowDifference = placedRow - highRow;
+        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
+
+        int differenceDifference = columnDifference - rowDifference;
+        System.out.println(differenceDifference);
+
+        if (differenceDifference > 0) highRow -= differenceDifference;
+        else lowColumn -= differenceDifference;
+
+        while (highRow >= lowRow && lowColumn <= highColumn) {
+            inARowCounter = ((tileGrid[highRow][lowColumn] == correctColor) ? inARowCounter + 1 : 0);
+            System.out.printf("Checking tile %d, %d%n", highRow, lowColumn);
+            if (inARowCounter == 4) {
+                return true;
+            }
+            lowColumn++;
+            highRow--;
+        }
         return false;
     }
 
     public void processResult() {
         System.out.println("Player " + (isRedTurn ? "red" : "yellow") + " has won");
 
-        if (tileCounter == 42) {
+        if (isTied) {
             redPlayer.getGameStats().addTie();
             yellowPlayer.getGameStats().addTie();
         } else if (isRedTurn) {
@@ -120,14 +209,20 @@ public class Game extends JFrame implements ActionListener {
             yellowPlayer.getGameStats().addWin();
             redPlayer.getGameStats().addLoss();
         }
-        // TODO: 04-Dec-20 show results screen
+        gameBoardPanel.getButtonList().forEach(e -> e.removeActionListener(this));
+        UserDatabase.save();
+        JOptionPane.showMessageDialog(this, getHighScoreString(), "Highscore", JOptionPane.INFORMATION_MESSAGE);
+
+        System.exit(0);
     }
 
     public void addUser(User user) {
         if ((redPlayer == null)) {
             redPlayer = user;
+            setTitle("Logga in spelare 2");
         } else {
             yellowPlayer = user;
+            setTitle("4 i rad");
             startGame();
         }
     }
@@ -135,16 +230,11 @@ public class Game extends JFrame implements ActionListener {
     private void startGame() {
         remove(loginMenuPanel);
         add(gameBoardPanel);
-        for (int i = 0; i < 7; i++) {
-            System.out.println("Enabling " + i);
-//            gameBoardPanel.getButtons()[0][i].setEnabled(true);
-        }
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         for (int row = 0; row < 6; row++) {
             for (int column = 0; column < 7; column++) {
                 if (e.getSource() == gameBoardPanel.getButtons()[row][column]) {
@@ -152,6 +242,24 @@ public class Game extends JFrame implements ActionListener {
                 }
             }
         }
+    }
+
+    public boolean isRedTurn() {
+        return isRedTurn;
+    }
+
+    public String getHighScoreString(){
+        StringBuilder highScore = new StringBuilder();
+
+        List<User> sortedUsers = UserDatabase.getUserList();
+        sortedUsers.sort(Collections.reverseOrder());
+        for (int i = 0; i < Math.min(sortedUsers.size(), 10); i++) {
+            if (sortedUsers.get(i).getGameStats().getWins() == 0) {
+                break;
+            }
+            highScore.append(String.format("%d: %s %s%n", i, sortedUsers.get(i).getUserName(), sortedUsers.get(i).getGameStats().toString()));
+        }
+        return highScore.toString();
     }
 }
 

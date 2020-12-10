@@ -25,12 +25,12 @@ public class UserDatabase {
         }
     }
 
-    public static void addUser(User recievedUser) {
+    public static void addUser(User receivedUser) {
         Optional<User> userOptional = userList.stream()
-                .filter(user -> user.getUserName().equals(recievedUser.getUserName()))
+                .filter(user -> user.getUserName().equals(receivedUser.getUserName()))
                 .findFirst();
         if (userOptional.isEmpty()) {
-            userList.add(recievedUser);
+            userList.add(receivedUser);
             save();
         } else {
             throw new IllegalArgumentException("Username is already in use");
@@ -42,5 +42,10 @@ public class UserDatabase {
                 .filter(user -> user.getUserName().equals(userName))
                 .filter (user -> user.getPassword().equals(password))
                 .findFirst();
+    }
+
+    public static List<User> getUserList() {
+        load();
+        return userList;
     }
 }

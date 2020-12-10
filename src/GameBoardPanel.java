@@ -1,15 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-public class GameBoardPanel extends JPanel implements ActionListener {
-    public static final ImageIcon WHITE_TILE = formatIcon(new ImageIcon("src\\images\\whiteDot.png"), 100,100);
+public class GameBoardPanel extends JPanel {
+    public static final ImageIcon EMPTY_TILE = formatIcon(new ImageIcon("src\\images\\emptyTile.png"), 100,100);
     public static final ImageIcon YELLOW_TILE = formatIcon(new ImageIcon("src\\images\\yellowTile.png"), 100, 100);
+    public static final ImageIcon YELLOW_ARROW_TILE = formatIcon(new ImageIcon("src\\images\\yellowArrowTile.png"), 100, 100);
     public static final ImageIcon RED_TILE = formatIcon(new ImageIcon("src\\images\\redTile.png"), 100, 100);
-    JButton[][] buttons = new JButton[6][7];
+    public static final ImageIcon RED_ARROW_TILE = formatIcon(new ImageIcon("src\\images\\redArrowTile.png"), 100, 100);
 
-    Game game;
+    private final JButton[][] buttons = new JButton[6][7];
+    private final List<JButton> buttonList = new ArrayList<>();
+
+    private final Game game;
 
     public GameBoardPanel(Game game) {
         this.game = game;
@@ -23,24 +29,27 @@ public class GameBoardPanel extends JPanel implements ActionListener {
         for (int row = 5; row >= 0; row--) {
             for (int column = 0; column < 7; column++) {
                 buttons[row][column] = new JButton();
-                add(buttons[row][column]);
                 buttons[row][column].addActionListener(game);
                 buttons[row][column].setBackground(Color.BLUE);
-//                button.setEnabled(false);
-                buttons[row][column].setIcon(WHITE_TILE);
+                buttons[row][column].addMouseListener(new MouseAdapter(){
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        JButton jButton = (JButton) e.getSource();
+                        jButton.setRolloverIcon(game.isRedTurn() ? RED_ARROW_TILE : YELLOW_ARROW_TILE);
+                    }
+                });
+                buttons[row][column].setIcon(EMPTY_TILE);
                 buttons[row][column].setFocusPainted(false);
+                buttons[row][column].setContentAreaFilled(false);
                 buttons[row][column].setBorder(BorderFactory.createLineBorder(Color.BLUE));
+                buttonList.add(buttons[row][column]);
+                add(buttons[row][column]);
             }
         }
     }
 
     public JButton[][] getButtons() {
         return buttons;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 
     public static ImageIcon formatIcon(ImageIcon oldImageIcon, int width,
@@ -50,5 +59,9 @@ public class GameBoardPanel extends JPanel implements ActionListener {
                 java.awt.Image.SCALE_SMOOTH);
 
         return new ImageIcon(newImg);
+    }
+
+    public List<JButton> getButtonList() {
+        return buttonList;
     }
 }

@@ -5,14 +5,14 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 
 public class LoginMenuPanel extends JPanel implements ActionListener {
-    JTextField userNameField = new JTextField("Enter username");
-    JTextField passwordField = new JTextField("Enter password");
-    JButton newUserButton = new JButton("Create new user");
-    JButton confirmLoginButton = new JButton("Log in");
+    private final JTextField userNameField = new JTextField("Enter username");
+    private final JTextField passwordField = new JTextField("Enter password");
+    private final JButton newUserButton = new JButton("Create new user");
+    private final JButton confirmLoginButton = new JButton("Log in");
 
-    JLabel outputLabel = new JLabel("Välkommen till världens bästa 4-i-rad spel!");
+    private final JLabel outputLabel = new JLabel("Välkommen till världens bästa 4-i-rad spel!");
 
-    Game game;
+    private final Game game;
 
 
     public LoginMenuPanel() {
@@ -28,9 +28,9 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
     }
 
     void createUser() {
-        User user = new User();
-        user.setUserName(userNameField.getText().trim());
-        user.setPassword(passwordField.getText().trim());
+        User user = new User()
+                .setUserName(userNameField.getText().trim())
+                .setPassword(passwordField.getText().trim());
 
         try {
             UserDatabase.addUser(user);
@@ -44,6 +44,7 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
         Optional<User> userOptional;
         userOptional = UserDatabase.getUser(userNameField.getText(), passwordField.getText());
         userOptional.ifPresentOrElse(this::loginSuccessful, this::loginFail);
+
     }
 
     void loginSuccessful(User user) {
@@ -53,11 +54,6 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
 
     void loginFail() {
         outputLabel.setText("Felaktigt användarnamn eller lösenord, försök igen");
-    }
-
-    public static void main(String[] args) {
-        UserDatabase.load();
-        new LoginMenuPanel();
     }
 
     @Override
