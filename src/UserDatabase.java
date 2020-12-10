@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDatabase {
-    private static List<User> userList = new ArrayList<>();
+    private static List<User> userList;
     private static final String fileName = "database.ser";
 
     @SuppressWarnings("unchecked")
@@ -12,7 +12,8 @@ public class UserDatabase {
         try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(fileName))){
             userList = (ArrayList<User>)reader.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            userList = new ArrayList<>();
+            save();
         }
     }
 
