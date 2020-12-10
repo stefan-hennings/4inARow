@@ -19,7 +19,6 @@ public class UserDatabase {
     public static void save() {
         try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(fileName))){
             writer.writeObject(userList);
-            System.out.println("User list saved");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -65,20 +65,7 @@ public class Game extends JFrame implements ActionListener {
         if (checkVerticalWin(startRow, endRow, placedColumn, correctColor)) {
             return true;
         }
-/*
-        System.out.println("\n\nStarting left-up check");
-        currentColumn = startColumn;
-        currentRow = startRow;
 
-        int columnDifference = currentColumn - placedColumn;
-        int rowDifference =  currentRow - placedRow;
-        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
-
-        int differenceDifference = columnDifference - rowDifference;
-        System.out.println(differenceDifference);
-
-        if (differenceDifference < 0) currentColumn -= differenceDifference;
-*/
         //Check top left to bottom right win
         if (checkLeftUpWin(startRow, endRow, startColumn, endColumn,
                 placedRow, placedColumn, correctColor)) {
@@ -89,32 +76,6 @@ public class Game extends JFrame implements ActionListener {
                 placedRow, placedColumn, correctColor)) {
             return true;
         }
-/*
-        //Top left to bottom right win
-        currentColumn = startColumn;
-        currentRow = endRow;
-        endRow = startRow;
-
-        columnDifference = currentColumn - placedColumn;
-        rowDifference =  placedRow - currentRow;
-        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
-
-        differenceDifference = columnDifference - rowDifference;
-        System.out.println(differenceDifference);
-
-        if (differenceDifference > 0) currentRow -= differenceDifference;
-        else currentColumn -= differenceDifference;
-
-        System.out.println("\n\nStarting left-down check");
-        while (currentRow >= endRow && currentColumn <= endColumn) {
-            inARowCounter = ((tileGrid[currentRow][currentColumn] == correctColor) ? inARowCounter + 1 : 0);
-            System.out.printf("Checking tile %d, %d%n", currentRow, currentColumn);
-            if (inARowCounter == 4) {
-                return true;
-            }
-            currentColumn++;
-            currentRow--;
-        }*/
         return false;
     }
 
@@ -146,20 +107,16 @@ public class Game extends JFrame implements ActionListener {
                                    int placedRow, int placedColumn, int correctColor) {
         int inARowCounter = 0;
 
-        System.out.println("\n\nStarting left-up check");
 
         int columnDifference = lowColumn - placedColumn;
         int rowDifference =  lowRow - placedRow;
-        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
 
-        int differenceDifference = columnDifference - rowDifference;
-        System.out.println(differenceDifference);
+        int columnRowDifference = columnDifference - rowDifference;
 
-        if (differenceDifference < 0) lowColumn -= differenceDifference;
+        if (columnRowDifference < 0) lowColumn -= columnRowDifference;
 
 
         while (lowRow <= highRow && lowColumn <= highColumn) {
-            System.out.printf("Checking tile %d, %d%n", lowRow, lowColumn);
             inARowCounter = ((tileGrid[lowRow][lowColumn] == correctColor) ? inARowCounter + 1 : 0);
             if (inARowCounter == 4) {
                 return true;
@@ -176,17 +133,14 @@ public class Game extends JFrame implements ActionListener {
 
         int columnDifference = lowColumn - placedColumn;
         int rowDifference = placedRow - highRow;
-        System.out.println("\nRow: " + rowDifference + ", column: " + columnDifference);
 
-        int differenceDifference = columnDifference - rowDifference;
-        System.out.println(differenceDifference);
+        int columnRowDifference = columnDifference - rowDifference;
 
-        if (differenceDifference > 0) highRow -= differenceDifference;
-        else lowColumn -= differenceDifference;
+        if (columnRowDifference > 0) highRow -= columnRowDifference;
+        else lowColumn -= columnRowDifference;
 
         while (highRow >= lowRow && lowColumn <= highColumn) {
             inARowCounter = ((tileGrid[highRow][lowColumn] == correctColor) ? inARowCounter + 1 : 0);
-            System.out.printf("Checking tile %d, %d%n", highRow, lowColumn);
             if (inARowCounter == 4) {
                 return true;
             }
@@ -197,8 +151,6 @@ public class Game extends JFrame implements ActionListener {
     }
 
     public void processResult(boolean isWon) {
-        System.out.println("Player " + (isRedTurn ? "red" : "yellow") + " has won");
-
         if (!isWon) {
             redPlayer.getGameStats().addTie();
             yellowPlayer.getGameStats().addTie();
@@ -257,7 +209,7 @@ public class Game extends JFrame implements ActionListener {
             if (sortedUsers.get(i).getGameStats().getWins() == 0) {
                 break;
             }
-            highScore.append(String.format("%d: %s %s%n", i, sortedUsers.get(i).getUserName(), sortedUsers.get(i).getGameStats().toString()));
+            highScore.append(String.format("%d: %s %s%n", i + 1, sortedUsers.get(i).getUserName(), sortedUsers.get(i).getGameStats().toString()));
         }
         return highScore.toString();
     }
