@@ -11,7 +11,6 @@ public class Game extends JFrame implements ActionListener {
     private int tileCounter = 0;
     private final int[][] tileGrid = new int[6][7];
     private boolean isRedTurn = true;
-    private boolean isTied = false;
 
     private final LoginMenuPanel loginMenuPanel;
     private final GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
@@ -36,10 +35,11 @@ public class Game extends JFrame implements ActionListener {
 
                 tileCounter++;
                 if (hasWon(row, column)) {
-                    processResult();
+                    processResult(true);
                     return;
                 } else if (tileCounter == 42) {
-                    isTied = true;
+                    processResult(false);
+                    return;
                 }
                 isRedTurn = !isRedTurn;
                 return;
@@ -196,10 +196,10 @@ public class Game extends JFrame implements ActionListener {
         return false;
     }
 
-    public void processResult() {
+    public void processResult(boolean isWon) {
         System.out.println("Player " + (isRedTurn ? "red" : "yellow") + " has won");
 
-        if (isTied) {
+        if (!isWon) {
             redPlayer.getGameStats().addTie();
             yellowPlayer.getGameStats().addTie();
         } else if (isRedTurn) {
