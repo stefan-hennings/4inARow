@@ -33,8 +33,11 @@ public class Game extends JFrame implements ActionListener {
                 gameBoardPanel.getButtons()[row][column].setIcon(isRedTurn ? GameBoardPanel.RED_TILE : GameBoardPanel.YELLOW_TILE);
 
                 tileCounter++;
-                if (hasWon(row, column) || tileCounter == 42) {
-                    processResult();
+                if (hasWon(row, column)) {
+                    processResult(true);
+                    return;
+                } else if (tileCounter == 42) {
+                    processResult(false);
                     return;
                 }
                 isRedTurn = !isRedTurn;
@@ -192,10 +195,10 @@ public class Game extends JFrame implements ActionListener {
         return false;
     }
 
-    public void processResult() {
+    public void processResult(boolean wasWon) {
         System.out.println("Player " + (isRedTurn ? "red" : "yellow") + " has won");
 
-        if (tileCounter == 42) {
+        if (!wasWon) {
             redPlayer.getGameStats().addTie();
             yellowPlayer.getGameStats().addTie();
         } else if (isRedTurn) {
@@ -245,16 +248,28 @@ public class Game extends JFrame implements ActionListener {
     }
 
     public String getHighScoreString(){
-        List<User> sortedUsers = UserDatabase.getUserList();
-        sortedUsers.sort(Collections.reverseOrder());
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < Math.min(sortedUsers.size(), 10); i++) {
-            if (sortedUsers.get(i).getGameStats().getWins() == 0) {
-                break;
-            }
-            sb.append(i+1).append(": ").append(sortedUsers.get(i).getUserName()).append(" ").append(sortedUsers.get(i).getGameStats().toString()).append("\n");
-        }
-        return sb.toString();
+        StringBuilder highScore = new StringBuilder();
+
+        UserDatabase.getUserList().stream()
+                .filter(user -> user.getGameStats().getWins() > 0)
+                .sorted(Collections.reverseOrder())
+                .limit(10)
+                .forEach(user -> {
+                    int counter = 1;
+                    highScore.append(String.format("%d: %s %s%n", counter, user.getUserName(), user.getGameStats().toString()));
+                });
+        return highScore.toString();
+
+
+//        List<User> sortedUsers = UserDatabase.getUserList();
+//        sortedUsers.sort(Collections.reverseOrder());
+//        for (int i = 0; i < Math.min(sortedUsers.size(), 10); i++) {
+//            if (sortedUsers.get(i).getGameStats().getWins() == 0) {
+//                break;
+//            }
+//            highScore.append(String.format("%d: %s %s%n", i, sortedUsers.get(i).getUserName(), sortedUsers.get(i).getGameStats().toString()));
+//        }
+//        return highScore.toString();
     }
 }
 
