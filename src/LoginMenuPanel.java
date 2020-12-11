@@ -23,6 +23,7 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
         newUserButton.addActionListener(this);
         add(confirmLoginButton);
         confirmLoginButton.addActionListener(this);
+
     }
 
     void createUser() {
