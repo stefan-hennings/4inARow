@@ -14,6 +14,7 @@ public class Game extends JFrame implements ActionListener {
 
     private final LoginMenuPanel loginMenuPanel;
     private final GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
+    ImageIcon winnerIcon = new ImageIcon("43991-93-ibate-1.png");
 
     public Game(LoginMenuPanel loginMenuPanel) {
         this.loginMenuPanel = loginMenuPanel;
@@ -163,7 +164,9 @@ public class Game extends JFrame implements ActionListener {
         }
         gameBoardPanel.getButtonList().forEach(e -> e.removeActionListener(this));
         UserDatabase.save();
-        JOptionPane.showMessageDialog(this, getHighScoreString(), "Highscore", JOptionPane.INFORMATION_MESSAGE);
+        Object [] option = {"Spela igen", "Avsluta"};
+        int n = JOptionPane.showOptionDialog(this, getHighScoreString(), "Highscore",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, winnerIcon, option,option[0]);
 
         System.exit(0);
     }
