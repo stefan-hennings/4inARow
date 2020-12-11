@@ -164,11 +164,17 @@ public class Game extends JFrame implements ActionListener {
         }
         gameBoardPanel.getButtonList().forEach(e -> e.removeActionListener(this));
         UserDatabase.save();
+
         Object [] option = {"Spela igen", "Avsluta"};
         int n = JOptionPane.showOptionDialog(this, getHighScoreString(), "Highscore",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, winnerIcon, option,option[0]);
-
-        System.exit(0);
+        if (n==0) {
+            Window win = SwingUtilities.getWindowAncestor(gameBoardPanel);
+            win.dispose();
+            UserDatabase.load();
+            new LoginMenuPanel();
+        }
+        else System.exit(0);
     }
 
     public void addUser(User user) {
