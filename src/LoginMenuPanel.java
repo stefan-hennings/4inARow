@@ -5,19 +5,18 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 
 public class LoginMenuPanel extends JPanel implements ActionListener {
-    private final JTextField userNameField = new JTextField("Enter username");
-    private final JTextField passwordField = new JTextField("Enter password");
+    private final JTextField userNameField = new JTextField("Användarnamn");
+    private final JPasswordField passwordField = new JPasswordField();
     private final JButton newUserButton = new JButton("Create new user");
     private final JButton confirmLoginButton = new JButton("Log in");
+    private final JButton highScoreButton = new JButton("Highscore");
 
     private final JLabel outputLabel = new JLabel("Välkommen till världens bästa 4-i-rad spel!");
 
     private final Game game;
-
-
     public LoginMenuPanel() {
         this.game = new Game(this);
-        setLayout(new GridLayout(5, 1));
+        setLayout(new GridLayout(6, 1));
         add(outputLabel);
         add(userNameField);
         add(passwordField);
@@ -25,6 +24,10 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
         newUserButton.addActionListener(this);
         add(confirmLoginButton);
         confirmLoginButton.addActionListener(this);
+        add(highScoreButton);
+        highScoreButton.addActionListener(this);
+
+
     }
 
     void createUser() {
@@ -62,6 +65,8 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
             createUser();
         } else if (e.getSource() == confirmLoginButton) {
             attemptLogin();
+        } else if (e.getSource() == highScoreButton){
+            JOptionPane.showMessageDialog(this, game.getHighScoreString());
         }
     }
 }
