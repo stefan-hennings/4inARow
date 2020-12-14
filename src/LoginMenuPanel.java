@@ -7,18 +7,12 @@ import java.util.Optional;
 public class LoginMenuPanel extends JPanel implements ActionListener {
     public static final Color FOREGROUND_COLOR = new Color(0x79AA9E);
     public static final Color BACKGROUND_COLOR = new Color(0x0123AA);
-    private final JLabel userNameLabel = new JLabel("Ange användarnamn: ");
-    private final JLabel passwordLabel = new JLabel("Ange lösenord: ");
-    private final JPanel gridPanel = new JPanel(new GridLayout(2,3));
-    private final JPanel bottomPanel = new JPanel();
-    private final JPanel topPanel = new JPanel();
     private final JTextField userNameField = new JTextField("");
     private final JTextField passwordField = new JTextField("");
     private final JButton newUserButton = new JButton("Skapa ny användare");
     private final JButton confirmLoginButton = new JButton("Logga in");
 
-    private final JLabel headerLabel = new JLabel("Välkommen till Best Company Ever AB's 4-i-rad spel!");
-    private final JLabel footerLabel = new JLabel("Logga in med befintlig användare för att spela, alternativt skapa ny användare och logga sedan in.");
+    private final JLabel outputLabel = new JLabel("Välkommen till Best Company Ever AB's 4-i-rad spel!");
 
     private final Game game;
 
@@ -29,28 +23,33 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
 
         setLayout(new BorderLayout());
 
-        headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        headerLabel.setPreferredSize(new Dimension(950, 350));
-        headerLabel.setFont(new Font("Bell MT", Font.BOLD, 40));
-        headerLabel.setForeground(FOREGROUND_COLOR);
-        headerLabel.setBackground(BACKGROUND_COLOR);
+        outputLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        outputLabel.setPreferredSize(new Dimension(950, 350));
+        outputLabel.setFont(new Font("Bell MT", Font.BOLD, 40));
+        outputLabel.setForeground(FOREGROUND_COLOR);
+        outputLabel.setBackground(BACKGROUND_COLOR);
 
+        JLabel footerLabel = new JLabel("Logga in med befintlig användare för att spela, alternativt skapa ny användare och logga sedan in.");
         footerLabel.setPreferredSize(new Dimension(950, 150));
         footerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         footerLabel.setFont(new Font("Bell MT", Font.BOLD, 18));
         footerLabel.setBackground(BACKGROUND_COLOR);
         footerLabel.setForeground(FOREGROUND_COLOR);
 
+        JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
         topPanel.setBackground(BACKGROUND_COLOR);
-        topPanel.add(headerLabel, BorderLayout.CENTER);
+        topPanel.add(outputLabel, BorderLayout.CENTER);
         topPanel.add(footerLabel, BorderLayout.SOUTH);
 
+        JLabel userNameLabel = new JLabel("Ange användarnamn: ");
         userNameLabel.setForeground(FOREGROUND_COLOR);
         userNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel passwordLabel = new JLabel("Ange lösenord: ");
         passwordLabel.setForeground(FOREGROUND_COLOR);
         passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+        JPanel gridPanel = new JPanel(new GridLayout(2, 2));
         gridPanel.add(userNameLabel);
         gridPanel.add(userNameField);
         gridPanel.add(passwordLabel);
@@ -60,6 +59,7 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
         add(topPanel, BorderLayout.NORTH);
         add(gridPanel, BorderLayout.CENTER);
 
+        JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());
         bottomPanel.setPreferredSize(new Dimension(950, 200));
         bottomPanel.setBackground(BACKGROUND_COLOR);
@@ -83,9 +83,9 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
 
         try {
             UserDatabase.addUser(user);
-            headerLabel.setText(user + " skapad");
+            outputLabel.setText(user + " skapad");
         } catch (IllegalArgumentException e) {
-            headerLabel.setText(e.getMessage());
+            outputLabel.setText(e.getMessage());
         }
     }
 
@@ -97,12 +97,12 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
     }
 
     void loginSuccessful(User user) {
-        headerLabel.setText( "<html>" + user + " loggade in. <br/>Logga in spelare 2. </html>");
+        outputLabel.setText( "<html>" + user + " loggade in. <br/>Logga in spelare 2. </html>");
         game.addUser(user);
     }
 
     void loginFail() {
-        headerLabel.setText("Felaktigt användarnamn eller lösenord, försök igen");
+        outputLabel.setText("Felaktigt användarnamn eller lösenord, försök igen");
     }
 
     @Override
