@@ -19,7 +19,7 @@ public class GameBoardPanel extends JPanel {
 
     public GameBoardPanel(Game game) {
         this.game = game;
-        setBackground(Color.BLUE);
+        setBackground(LoginMenuPanel.BACKGROUND_COLOR);
         setLayout(new GridLayout(6, 7));
         createButtons();
         repaint();
@@ -30,7 +30,7 @@ public class GameBoardPanel extends JPanel {
             for (int column = 0; column < 7; column++) {
                 buttons[row][column] = new JButton();
                 buttons[row][column].addActionListener(game);
-                buttons[row][column].setBackground(Color.BLUE);
+                buttons[row][column].setBackground(LoginMenuPanel.BACKGROUND_COLOR);
                 buttons[row][column].addMouseListener(new MouseAdapter(){
                     @Override
                     public void mouseEntered(MouseEvent e) {
@@ -41,7 +41,7 @@ public class GameBoardPanel extends JPanel {
                 buttons[row][column].setIcon(EMPTY_TILE);
                 buttons[row][column].setFocusPainted(false);
                 buttons[row][column].setContentAreaFilled(false);
-                buttons[row][column].setBorder(BorderFactory.createLineBorder(Color.BLUE));
+                buttons[row][column].setBorder(BorderFactory.createLineBorder(LoginMenuPanel.BACKGROUND_COLOR));
                 buttonList.add(buttons[row][column]);
                 add(buttons[row][column]);
             }
