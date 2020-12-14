@@ -12,15 +12,13 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
     private final JButton newUserButton = new JButton("Skapa ny användare");
     private final JButton confirmLoginButton = new JButton("Logga in");
 
+
     private final JLabel outputLabel = new JLabel("Välkommen till Best Company Ever AB's 4-i-rad spel!");
 
     private final Game game;
-
-
     public LoginMenuPanel() {
 
         this.game = new Game(this);
-
         setLayout(new BorderLayout());
 
         outputLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -71,6 +69,7 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
         bottomPanel.add(confirmLoginButton);
 
         add(bottomPanel, BorderLayout.SOUTH);
+
         newUserButton.addActionListener(this);
         confirmLoginButton.addActionListener(this);
         setBackground(BACKGROUND_COLOR);
@@ -111,6 +110,8 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
             createUser();
         } else if (e.getSource() == confirmLoginButton) {
             attemptLogin();
+        } else if (e.getSource() == highScoreButton){
+            JOptionPane.showMessageDialog(this, game.getHighScoreString());
         }
     }
 }

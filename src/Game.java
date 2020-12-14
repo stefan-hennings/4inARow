@@ -14,6 +14,7 @@ public class Game extends JFrame implements ActionListener {
 
     private final LoginMenuPanel loginMenuPanel;
     private final GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
+    private final ImageIcon winnerIcon =  new ImageIcon("43991-93-ibate-1.png");
 
     public Game(LoginMenuPanel loginMenuPanel) {
         this.loginMenuPanel = loginMenuPanel;
@@ -25,6 +26,7 @@ public class Game extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+
     }
 
     public void placeTile(int column) {
@@ -163,9 +165,17 @@ public class Game extends JFrame implements ActionListener {
         }
         gameBoardPanel.getButtonList().forEach(e -> e.removeActionListener(this));
         UserDatabase.save();
-        JOptionPane.showMessageDialog(this, getHighScoreString(), "Highscore", JOptionPane.INFORMATION_MESSAGE);
 
-        System.exit(0);
+        Object [] option = {"Spela igen", "Avsluta"};
+        int n = JOptionPane.showOptionDialog(this, getHighScoreString(), "Highscore",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, winnerIcon, option,option[0]);
+        if (n==0) {
+            Window win = SwingUtilities.getWindowAncestor(gameBoardPanel);
+            win.dispose();
+            UserDatabase.load();
+            new LoginMenuPanel();
+        }
+        else System.exit(0);
     }
 
     public void addUser(User user) {
