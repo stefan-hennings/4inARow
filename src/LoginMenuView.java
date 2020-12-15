@@ -13,6 +13,7 @@ public class LoginMenuView extends JPanel implements ActionListener {
     private final JTextField passwordField = new JTextField("");
     private final JButton newUserButton = new JButton("Skapa ny användare");
     private final JButton confirmLoginButton = new JButton("Logga in");
+    private final JButton removeUser = new JButton("Ta bort användare");
 
 
     private final JLabel outputLabel = new JLabel("Välkommen till Best Company Ever AB's 4-i-rad spel!");
@@ -66,14 +67,17 @@ public class LoginMenuView extends JPanel implements ActionListener {
 
         newUserButton.setPreferredSize(new Dimension(250, 50));
         confirmLoginButton.setPreferredSize(new Dimension(250, 50));
+        removeUser.setPreferredSize(new Dimension(250, 50));
 
         bottomPanel.add(newUserButton);
         bottomPanel.add(confirmLoginButton);
+        bottomPanel.add(removeUser);
 
         add(bottomPanel, BorderLayout.SOUTH);
 
         newUserButton.addActionListener(this);
         confirmLoginButton.addActionListener(this);
+        removeUser.addActionListener(this);
         setBackground(BACKGROUND_COLOR);
     }
 
@@ -111,6 +115,16 @@ public class LoginMenuView extends JPanel implements ActionListener {
             createUser();
         } else if (e.getSource() == confirmLoginButton) {
             attemptLogin();
+
+        }else if (e.getSource() == removeUser){
+            String answer = JOptionPane.showInputDialog("Ange lösenord");
+            if (answer.equals("admin")){
+                answer = JOptionPane.showInputDialog("Ange användarnamn på användaren som ska tas bort");
+                String output = UserDatabase.removeUser(answer);
+                JOptionPane.showMessageDialog(null, output);
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Felaktigt lösenord");
         }
     }
 }
