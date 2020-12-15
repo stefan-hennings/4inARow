@@ -38,6 +38,22 @@ public class UserDatabase {
             throw new IllegalArgumentException("Username is already in use");
         }
     }
+    public static String removeUser(String userName) {
+        for (var u : userList) {
+            System.out.println(u.getUserName());
+        }
+
+        for (var u : userList) {
+            if (userName.equals(u.getUserName())){
+                userList.remove(u);
+                save();
+                return userName + " borttagen";
+            }
+
+        }
+        return "Hittade inte användaren";
+    }
+
 
     public static Optional<User> getUser(String userName, String password) {
         return userList.stream()
