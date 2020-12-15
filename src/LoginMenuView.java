@@ -1,10 +1,12 @@
+import model.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Optional;
 
-public class LoginMenuPanel extends JPanel implements ActionListener {
+public class LoginMenuView extends JPanel implements ActionListener {
     public static final Color FOREGROUND_COLOR = new Color(0x79AA9E);
     public static final Color BACKGROUND_COLOR = new Color(0x0123AA);
     private final JTextField userNameField = new JTextField("");
@@ -15,10 +17,10 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
 
     private final JLabel outputLabel = new JLabel("Välkommen till Best Company Ever AB's 4-i-rad spel!");
 
-    private final Game game;
-    public LoginMenuPanel() {
+    private final GameController gameController;
+    public LoginMenuView() {
 
-        this.game = new Game(this);
+        this.gameController = new GameController(this);
         setLayout(new BorderLayout());
 
         outputLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -92,12 +94,11 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
         Optional<User> userOptional;
         userOptional = UserDatabase.getUser(userNameField.getText(), passwordField.getText());
         userOptional.ifPresentOrElse(this::loginSuccessful, this::loginFail);
-
     }
 
     void loginSuccessful(User user) {
         outputLabel.setText( "<html>" + user + " loggade in. <br/>Logga in spelare 2. </html>");
-        game.addUser(user);
+        gameController.addUser(user);
     }
 
     void loginFail() {
@@ -110,8 +111,6 @@ public class LoginMenuPanel extends JPanel implements ActionListener {
             createUser();
         } else if (e.getSource() == confirmLoginButton) {
             attemptLogin();
-        } else if (e.getSource() == highScoreButton){
-            JOptionPane.showMessageDialog(this, game.getHighScoreString());
         }
     }
 }

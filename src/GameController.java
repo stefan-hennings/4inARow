@@ -1,3 +1,6 @@
+import model.Tile;
+import model.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,21 +8,23 @@ import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
 
-public class Game extends JFrame implements ActionListener {
+public class GameController extends JFrame implements ActionListener {
     private User redPlayer;
     private User yellowPlayer;
     private int tileCounter = 0;
     private final int[][] tileGrid = new int[6][7];
     private boolean isRedTurn = true;
 
-    private final LoginMenuPanel loginMenuPanel;
-    private final GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
+    private final LoginMenuView loginMenuView;
+    private final GameBoardView gameBoardView = new GameBoardView(this);
     private final ImageIcon winnerIcon =  new ImageIcon("43991-93-ibate-1.png");
+    private final ImageIcon imageIcon = new ImageIcon("src/images/Games_BoardGames_Artboard_28-512.png");
 
-    public Game(LoginMenuPanel loginMenuPanel) {
-        this.loginMenuPanel = loginMenuPanel;
+    public GameController(LoginMenuView loginMenuView) {
+        this.loginMenuView = loginMenuView;
+        setIconImage(imageIcon.getImage());
         setLayout(new BorderLayout());
-        add(BorderLayout.CENTER, loginMenuPanel);
+        add(BorderLayout.CENTER, loginMenuView);
         setTitle("Logga in spelare 1");
         setSize(new Dimension(1000, 800));
         setResizable(false);
@@ -33,7 +38,7 @@ public class Game extends JFrame implements ActionListener {
         for (int row = 0; row < 6; row++) {
             if (tileGrid[row][column] == Tile.EMPTY.getI()) {
                 tileGrid[row][column] = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
-                gameBoardPanel.getButtons()[row][column].setIcon(isRedTurn ? GameBoardPanel.RED_TILE : GameBoardPanel.YELLOW_TILE);
+                gameBoardView.getButtons()[row][column].setIcon(isRedTurn ? GameBoardView.RED_TILE : GameBoardView.YELLOW_TILE);
 
                 tileCounter++;
                 if (hasWon(row, column)) {
@@ -163,17 +168,17 @@ public class Game extends JFrame implements ActionListener {
             yellowPlayer.getGameStats().addWin();
             redPlayer.getGameStats().addLoss();
         }
-        gameBoardPanel.getButtonList().forEach(e -> e.removeActionListener(this));
+        gameBoardView.getButtonList().forEach(e -> e.removeActionListener(this));
         UserDatabase.save();
 
         Object [] option = {"Spela igen", "Avsluta"};
         int n = JOptionPane.showOptionDialog(this, getHighScoreString(), "Highscore",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, winnerIcon, option,option[0]);
         if (n==0) {
-            Window win = SwingUtilities.getWindowAncestor(gameBoardPanel);
+            Window win = SwingUtilities.getWindowAncestor(gameBoardView);
             win.dispose();
             UserDatabase.load();
-            new LoginMenuPanel();
+            new LoginMenuView();
         }
         else System.exit(0);
     }
@@ -190,16 +195,15 @@ public class Game extends JFrame implements ActionListener {
     }
 
     private void startGame() {
-        remove(loginMenuPanel);
-        add(gameBoardPanel);
+        remove(loginMenuView);
+        add(gameBoardView);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
         for (int row = 0; row < 6; row++) {
             for (int column = 0; column < 7; column++) {
-                if (e.getSource() == gameBoardPanel.getButtons()[row][column]) {
+                if (e.getSource() == gameBoardView.getButtons()[row][column]) {
                     placeTile(column);
                 }
             }
