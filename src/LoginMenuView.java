@@ -68,7 +68,7 @@ public class LoginMenuView extends JPanel implements ActionListener {
         add(gridPanel, BorderLayout.CENTER);
 
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 25));
         bottomPanel.setPreferredSize(new Dimension(getParent().getWidth(), 200));
         bottomPanel.setBackground(BACKGROUND_COLOR);
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(30,0,30,0));
