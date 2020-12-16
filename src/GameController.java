@@ -112,6 +112,8 @@ public class GameController extends JFrame implements ActionListener {
 
     private boolean checkLeftUpWin(int lowRow, int highRow, int lowColumn, int highColumn,
                                    int placedRow, int placedColumn, int correctColor) {
+        System.out.println("\n\nStarting left-up check");
+        System.out.println("Rad: "+placedRow + " Kolumn: " + placedColumn + " Lägsta rad:" + lowRow + " Högsta rad: " + highRow);
         int inARowCounter = 0;
 
 
@@ -124,6 +126,7 @@ public class GameController extends JFrame implements ActionListener {
 
 
         while (lowRow <= highRow && lowColumn <= highColumn) {
+            System.out.printf("Checking tile %d, %d%n", lowRow, lowColumn);
             inARowCounter = ((tileGrid[lowRow][lowColumn] == correctColor) ? inARowCounter + 1 : 0);
             if (inARowCounter == 4) {
                 return true;
