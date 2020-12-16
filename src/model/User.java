@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 public class User implements Serializable, Comparable<User> {
 
-    // Design pattern Fluent interface
-
     private String userName;
     private String password;
     private final GameStats gameStats;

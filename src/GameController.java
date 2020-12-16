@@ -17,12 +17,11 @@ public class GameController extends JFrame implements ActionListener {
 
     private final LoginMenuView loginMenuView;
     private final GameBoardView gameBoardView = new GameBoardView(this);
-    private final ImageIcon winnerIcon =  new ImageIcon("43991-93-ibate-1.png");
-    private final ImageIcon imageIcon = new ImageIcon("src/images/Games_BoardGames_Artboard_28-512.png");
+    private final ImageIcon winnerIcon =  new ImageIcon("src/images/winnerIcon.png");
 
     public GameController(LoginMenuView loginMenuView) {
         this.loginMenuView = loginMenuView;
-        setIconImage(imageIcon.getImage());
+        setIconImage(new ImageIcon("src/images/frameIcon.png").getImage());
         setLayout(new BorderLayout());
         add(BorderLayout.CENTER, loginMenuView);
         setTitle("Logga in spelare 1");
