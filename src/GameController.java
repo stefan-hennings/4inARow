@@ -182,6 +182,7 @@ public class GameController extends JFrame implements ActionListener {
         UserDatabase.save();
 
         Object [] option = {"Spela igen", "Avsluta"};
+        JOptionPane.showMessageDialog(this, (isRedTurn ? "Röd" : "Gul") + " spelare vann!");
         int n = JOptionPane.showOptionDialog(this, getHighScoreString(), "Highscore",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, winnerIcon, option,option[0]);
         if (n==0) {
