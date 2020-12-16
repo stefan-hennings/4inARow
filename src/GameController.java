@@ -132,7 +132,6 @@ public class GameController extends JFrame implements ActionListener {
 
 
         while (lowRow <= highRow && lowColumn <= highColumn) {
-            System.out.printf("Checking tile %d, %d%n", lowRow, lowColumn);
             inARowCounter = ((tileGrid[lowRow][lowColumn] == correctColor) ? inARowCounter + 1 : 0);
             if (inARowCounter == 4) {
                 return true;
