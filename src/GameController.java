@@ -112,17 +112,25 @@ public class GameController extends JFrame implements ActionListener {
 
     private boolean checkLeftUpWin(int lowRow, int highRow, int lowColumn, int highColumn,
                                    int placedRow, int placedColumn, int correctColor) {
-        System.out.println("\n\nStarting left-up check");
-        System.out.println("Rad: "+placedRow + " Kolumn: " + placedColumn + " Lägsta rad:" + lowRow + " Högsta rad: " + highRow);
-        int inARowCounter = 0;
 
+
+        int inARowCounter = 0;
 
         int columnDifference = lowColumn - placedColumn;
         int rowDifference =  lowRow - placedRow;
 
         int columnRowDifference = columnDifference - rowDifference;
 
-        if (columnRowDifference < 0) lowColumn -= columnRowDifference;
+
+        if(columnRowDifference > 0 && placedColumn < 3) {
+            lowRow += columnRowDifference;
+
+        }
+
+        else if (columnRowDifference < 0){
+            lowColumn -= columnRowDifference;
+        }
+
 
 
         while (lowRow <= highRow && lowColumn <= highColumn) {
