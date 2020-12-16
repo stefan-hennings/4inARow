@@ -101,7 +101,8 @@ public class LoginMenuView extends JPanel implements ActionListener {
     }
 
     void loginSuccessful(User user) {
-        outputLabel.setText( "<html>" + user + " loggade in. <br/>Logga in spelare 2. </html>");
+        outputLabel.setText( "<html><font color=RED>" + user + "</font> loggade in. <br/>" +
+                "Logga in <font color=YELLOW>spelare 2</font>. </html>");
         gameController.addUser(user);
     }
 
