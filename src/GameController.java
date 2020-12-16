@@ -125,9 +125,7 @@ public class GameController extends JFrame implements ActionListener {
         if(columnRowDifference > 0 && placedColumn < 3) {
             lowRow += columnRowDifference;
 
-        }
-
-        else if (columnRowDifference < 0){
+        } else if (columnRowDifference < 0){
             lowColumn -= columnRowDifference;
         }
 
@@ -154,8 +152,11 @@ public class GameController extends JFrame implements ActionListener {
 
         int columnRowDifference = columnDifference - rowDifference;
 
-        if (columnRowDifference > 0) highRow -= columnRowDifference;
-        else lowColumn -= columnRowDifference;
+        if (columnRowDifference > 0) {
+            highRow -= columnRowDifference;
+        } else {
+            lowColumn -= columnRowDifference;
+        }
 
         while (highRow >= lowRow && lowColumn <= highColumn) {
             inARowCounter = ((tileGrid[highRow][lowColumn] == correctColor) ? inARowCounter + 1 : 0);
