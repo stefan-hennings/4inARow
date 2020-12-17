@@ -39,21 +39,18 @@ public class UserDatabase {
         }
     }
     public static String removeUser(String userName) {
-        for (var u : userList) {
-            System.out.println(u.getUserName());
-        }
+        Optional<User> userOptional = userList.stream()
+                .filter(user -> user.getUserName().equals(userName))
+                .findFirst();
 
-        for (var u : userList) {
-            if (userName.equals(u.getUserName())){
-                userList.remove(u);
-                save();
-                return userName + " borttagen";
-            }
-
+        if (userOptional.isPresent()) {
+            userList.remove(userOptional.get());
+            save();
+            return userName + " borttagen";
+        } else {
+            return "Hittade inte användaren";
         }
-        return "Hittade inte användaren";
     }
-
 
     public static Optional<User> getUser(String userName, String password) {
         return userList.stream()

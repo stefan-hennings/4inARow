@@ -125,10 +125,12 @@ public class LoginMenuView extends JPanel implements ActionListener {
         } else if (e.getSource() == confirmLoginButton) {
             attemptLogin();
 
-        }else if (e.getSource() == removeUserButton){
+        } else if (e.getSource() == removeUserButton){
             String answer = JOptionPane.showInputDialog("Ange administratörslösenord");
             if (answer.equals("admin")){
-                answer = JOptionPane.showInputDialog("Ange användarnamn på användaren som ska tas bort");
+                StringBuilder stringBuilder = new StringBuilder();
+                UserDatabase.getUserList().forEach(user -> stringBuilder.append(user).append("\n"));
+                answer = JOptionPane.showInputDialog("Ange användarnamn på användaren som ska tas bort:\n" + stringBuilder.toString());
                 String output = UserDatabase.removeUser(answer);
                 JOptionPane.showMessageDialog(null, output);
             }

@@ -17,12 +17,11 @@ public class GameController extends JFrame implements ActionListener {
 
     private final LoginMenuView loginMenuView;
     private final GameBoardView gameBoardView = new GameBoardView(this);
-    private final ImageIcon winnerIcon =  new ImageIcon("43991-93-ibate-1.png");
-    private final ImageIcon imageIcon = new ImageIcon("src/images/Games_BoardGames_Artboard_28-512.png");
+    private final ImageIcon winnerIcon =  new ImageIcon("src/images/winnerIcon.png");
 
     public GameController(LoginMenuView loginMenuView) {
         this.loginMenuView = loginMenuView;
-        setIconImage(imageIcon.getImage());
+        setIconImage(new ImageIcon("src/images/frameIcon.png").getImage());
         setLayout(new BorderLayout());
         add(BorderLayout.CENTER, loginMenuView);
         setTitle("Logga in spelare 1");
@@ -112,15 +111,23 @@ public class GameController extends JFrame implements ActionListener {
 
     private boolean checkLeftUpWin(int lowRow, int highRow, int lowColumn, int highColumn,
                                    int placedRow, int placedColumn, int correctColor) {
-        int inARowCounter = 0;
 
+
+        int inARowCounter = 0;
 
         int columnDifference = lowColumn - placedColumn;
         int rowDifference =  lowRow - placedRow;
 
         int columnRowDifference = columnDifference - rowDifference;
 
-        if (columnRowDifference < 0) lowColumn -= columnRowDifference;
+
+        if(columnRowDifference > 0 && placedColumn < 3) {
+            lowRow += columnRowDifference;
+
+        } else if (columnRowDifference < 0){
+            lowColumn -= columnRowDifference;
+        }
+
 
 
         while (lowRow <= highRow && lowColumn <= highColumn) {
@@ -143,8 +150,11 @@ public class GameController extends JFrame implements ActionListener {
 
         int columnRowDifference = columnDifference - rowDifference;
 
-        if (columnRowDifference > 0) highRow -= columnRowDifference;
-        else lowColumn -= columnRowDifference;
+        if (columnRowDifference > 0) {
+            highRow -= columnRowDifference;
+        } else {
+            lowColumn -= columnRowDifference;
+        }
 
         while (highRow >= lowRow && lowColumn <= highColumn) {
             inARowCounter = ((tileGrid[highRow][lowColumn] == correctColor) ? inARowCounter + 1 : 0);
@@ -172,6 +182,7 @@ public class GameController extends JFrame implements ActionListener {
         UserDatabase.save();
 
         Object [] option = {"Spela igen", "Avsluta"};
+        JOptionPane.showMessageDialog(this, (isRedTurn ? "Röd" : "Gul") + " spelare vann!");
         int n = JOptionPane.showOptionDialog(this, getHighScoreString(), "Highscore",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, winnerIcon, option,option[0]);
         if (n==0) {
