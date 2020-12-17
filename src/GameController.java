@@ -17,7 +17,7 @@ public class GameController extends JFrame implements ActionListener {
 
     private final LoginMenuView loginMenuView;
     private final GameBoardView gameBoardView = new GameBoardView(this);
-    private final ImageIcon winnerIcon =  new ImageIcon("src/images/winnerIcon.png");
+    private final ImageIcon winnerIcon = new ImageIcon("src/images/winnerIcon.png");
 
     public GameController(LoginMenuView loginMenuView) {
         this.loginMenuView = loginMenuView;
@@ -116,18 +116,17 @@ public class GameController extends JFrame implements ActionListener {
         int inARowCounter = 0;
 
         int columnDifference = lowColumn - placedColumn;
-        int rowDifference =  lowRow - placedRow;
+        int rowDifference = lowRow - placedRow;
 
         int columnRowDifference = columnDifference - rowDifference;
 
 
-        if(columnRowDifference > 0 && placedColumn < 3) {
+        if (columnRowDifference > 0 && placedColumn < 3) {
             lowRow += columnRowDifference;
 
-        } else if (columnRowDifference < 0){
+        } else if (columnRowDifference < 0) {
             lowColumn -= columnRowDifference;
         }
-
 
 
         while (lowRow <= highRow && lowColumn <= highColumn) {
@@ -181,17 +180,16 @@ public class GameController extends JFrame implements ActionListener {
         gameBoardView.getButtonList().forEach(e -> e.removeActionListener(this));
         UserDatabase.save();
 
-        Object [] option = {"Spela igen", "Avsluta"};
+        Object[] option = {"Spela igen", "Avsluta"};
         JOptionPane.showMessageDialog(this, (isRedTurn ? "Röd" : "Gul") + " spelare vann!");
         int n = JOptionPane.showOptionDialog(this, getHighScoreString(), "Highscore",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, winnerIcon, option,option[0]);
-        if (n==0) {
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, winnerIcon, option, option[0]);
+        if (n == 0) {
             Window win = SwingUtilities.getWindowAncestor(gameBoardView);
             win.dispose();
             UserDatabase.load();
             new LoginMenuView();
-        }
-        else System.exit(0);
+        } else System.exit(0);
     }
 
     public void addUser(User user) {
@@ -225,7 +223,7 @@ public class GameController extends JFrame implements ActionListener {
         return isRedTurn;
     }
 
-    public String getHighScoreString(){
+    public String getHighScoreString() {
         StringBuilder highScore = new StringBuilder();
 
         List<User> sortedUsers = UserDatabase.getUserList();

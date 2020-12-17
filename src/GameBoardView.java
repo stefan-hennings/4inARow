@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameBoardView extends JPanel {
-    public static final ImageIcon EMPTY_TILE = formatIcon(new ImageIcon("src\\images\\emptyTile.png"), 100,100);
+    public static final ImageIcon EMPTY_TILE = formatIcon(new ImageIcon("src\\images\\emptyTile.png"), 100, 100);
     public static final ImageIcon YELLOW_TILE = formatIcon(new ImageIcon("src\\images\\yellowTile.png"), 100, 100);
     public static final ImageIcon YELLOW_ARROW_TILE = formatIcon(new ImageIcon("src\\images\\yellowArrowTile.png"), 100, 100);
     public static final ImageIcon RED_TILE = formatIcon(new ImageIcon("src\\images\\redTile.png"), 100, 100);
@@ -31,7 +31,7 @@ public class GameBoardView extends JPanel {
                 buttons[row][column] = new JButton();
                 buttons[row][column].addActionListener(gameController);
                 buttons[row][column].setBackground(LoginMenuView.BACKGROUND_COLOR);
-                buttons[row][column].addMouseListener(new MouseAdapter(){
+                buttons[row][column].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         JButton jButton = (JButton) e.getSource();
@@ -49,7 +49,7 @@ public class GameBoardView extends JPanel {
     }
 
     public static ImageIcon formatIcon(ImageIcon oldImageIcon, int width,
-                                int height) {
+                                       int height) {
         Image oldImage = oldImageIcon.getImage();
         Image newImg = oldImage.getScaledInstance(width, height,
                 java.awt.Image.SCALE_SMOOTH);

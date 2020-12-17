@@ -11,8 +11,8 @@ public class UserDatabase {
 
     @SuppressWarnings("unchecked")
     public static void load() {
-        try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(fileName))){
-            userList = (ArrayList<User>)reader.readObject();
+        try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(fileName))) {
+            userList = (ArrayList<User>) reader.readObject();
         } catch (IOException | ClassNotFoundException e) {
             userList = new ArrayList<>();
             save();
@@ -20,7 +20,7 @@ public class UserDatabase {
     }
 
     public static void save() {
-        try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(fileName))){
+        try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(fileName))) {
             writer.writeObject(userList);
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,6 +38,14 @@ public class UserDatabase {
             throw new IllegalArgumentException("Username is already in use");
         }
     }
+
+    public static Optional<User> getUser(String userName, String password) {
+        return userList.stream()
+                .filter(user -> user.getUserName().equals(userName))
+                .filter(user -> user.getPassword().equals(password))
+                .findFirst();
+    }
+
     public static String removeUser(String userName) {
         Optional<User> userOptional = userList.stream()
                 .filter(user -> user.getUserName().equals(userName))
@@ -50,13 +58,6 @@ public class UserDatabase {
         } else {
             return "Hittade inte användaren";
         }
-    }
-
-    public static Optional<User> getUser(String userName, String password) {
-        return userList.stream()
-                .filter(user -> user.getUserName().equals(userName))
-                .filter (user -> user.getPassword().equals(password))
-                .findFirst();
     }
 
     public static List<User> getUserList() {

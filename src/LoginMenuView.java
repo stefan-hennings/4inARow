@@ -20,6 +20,7 @@ public class LoginMenuView extends JPanel implements ActionListener {
             "<font color=red>4</font> i <font color=YELLOW>rad</font>-spel!</html>");
 
     private final GameController gameController;
+
     public LoginMenuView() {
 
         this.gameController = new GameController(this);
@@ -55,14 +56,14 @@ public class LoginMenuView extends JPanel implements ActionListener {
         JLabel emptyColumnLabel = new JLabel();
         emptyColumnLabel.setBackground(BACKGROUND_COLOR);
 
-        JPanel gridPanel = new JPanel(new GridLayout(2, 3, 30,10));
+        JPanel gridPanel = new JPanel(new GridLayout(2, 3, 30, 10));
         gridPanel.add(userNameLabel);
         gridPanel.add(userNameField);
         gridPanel.add(emptyColumnLabel);
         gridPanel.add(passwordLabel);
         gridPanel.add(passwordField);
         gridPanel.setBackground(BACKGROUND_COLOR);
-        gridPanel.setBorder(BorderFactory.createEmptyBorder(50,50,0,0));
+        gridPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 0, 0));
 
         add(topPanel, BorderLayout.NORTH);
         add(gridPanel, BorderLayout.CENTER);
@@ -71,7 +72,7 @@ public class LoginMenuView extends JPanel implements ActionListener {
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 25));
         bottomPanel.setPreferredSize(new Dimension(getParent().getWidth(), 200));
         bottomPanel.setBackground(BACKGROUND_COLOR);
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(30,0,30,0));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
 
         newUserButton.setPreferredSize(new Dimension(250, 50));
         confirmLoginButton.setPreferredSize(new Dimension(250, 50));
@@ -109,7 +110,7 @@ public class LoginMenuView extends JPanel implements ActionListener {
     }
 
     void loginSuccessful(User user) {
-        outputLabel.setText( "<html><font color=RED>" + user + "</font> loggade in. <br/>" +
+        outputLabel.setText("<html><font color=RED>" + user + "</font> loggade in. <br/>" +
                 "Logga in <font color=YELLOW>spelare 2</font>. </html>");
         gameController.addUser(user);
     }
@@ -125,16 +126,15 @@ public class LoginMenuView extends JPanel implements ActionListener {
         } else if (e.getSource() == confirmLoginButton) {
             attemptLogin();
 
-        } else if (e.getSource() == removeUserButton){
+        } else if (e.getSource() == removeUserButton) {
             String answer = JOptionPane.showInputDialog("Ange administratörslösenord");
-            if (answer.equals("admin")){
+            if (answer.equals("admin")) {
                 StringBuilder stringBuilder = new StringBuilder();
                 UserDatabase.getUserList().forEach(user -> stringBuilder.append(user).append("\n"));
                 answer = JOptionPane.showInputDialog("Ange användarnamn på användaren som ska tas bort:\n" + stringBuilder.toString());
                 String output = UserDatabase.removeUser(answer);
                 JOptionPane.showMessageDialog(null, output);
-            }
-            else
+            } else
                 JOptionPane.showMessageDialog(null, "Felaktigt lösenord");
         }
     }
