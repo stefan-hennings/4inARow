@@ -180,8 +180,11 @@ public class GameController extends JFrame implements ActionListener {
         gameBoardView.getButtonList().forEach(e -> e.removeActionListener(this));
         UserDatabase.save();
 
+        JOptionPane.showMessageDialog(this, isWon ? (
+                (isRedTurn ? "Röd" : "Gul") + " spelare vann!") :
+                "Matchen blev oavgjort!");
+
         Object[] option = {"Spela igen", "Avsluta"};
-        JOptionPane.showMessageDialog(this, (isRedTurn ? "Röd" : "Gul") + " spelare vann!");
         int n = JOptionPane.showOptionDialog(this, getHighScoreString(), "Highscore",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, winnerIcon, option, option[0]);
         if (n == 0) {
