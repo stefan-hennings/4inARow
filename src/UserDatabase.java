@@ -35,7 +35,7 @@ public class UserDatabase {
             userList.add(receivedUser);
             save();
         } else {
-            throw new IllegalArgumentException("Username is already in use");
+            throw new IllegalArgumentException("Användaren finns redan");
         }
     }
 
