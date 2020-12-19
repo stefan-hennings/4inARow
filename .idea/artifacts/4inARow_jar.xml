@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="4inARow:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/4inARow_jar</output-path>
+    <root id="archive" name="4inARow.jar">
+      <element id="module-output" name="4inARow" />
+    </root>
+  </artifact>
+</component>

@@ -1,3 +1,6 @@
+import model.Tile;
+import model.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,33 +8,36 @@ import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
 
-public class Game extends JFrame implements ActionListener {
+public class GameController extends JFrame implements ActionListener {
     private User redPlayer;
     private User yellowPlayer;
     private int tileCounter = 0;
     private final int[][] tileGrid = new int[6][7];
     private boolean isRedTurn = true;
 
-    private final LoginMenuPanel loginMenuPanel;
-    private final GameBoardPanel gameBoardPanel = new GameBoardPanel(this);
+    private final LoginMenuView loginMenuView;
+    private final GameBoardView gameBoardView = new GameBoardView(this);
+    private final ImageIcon winnerIcon = new ImageIcon("src/images/winnerIcon.png");
 
-    public Game(LoginMenuPanel loginMenuPanel) {
-        this.loginMenuPanel = loginMenuPanel;
+    public GameController(LoginMenuView loginMenuView) {
+        this.loginMenuView = loginMenuView;
+        setIconImage(new ImageIcon("src/images/frameIcon.png").getImage());
         setLayout(new BorderLayout());
-        add(BorderLayout.CENTER, loginMenuPanel);
+        add(BorderLayout.CENTER, loginMenuView);
         setTitle("Logga in spelare 1");
         setSize(new Dimension(1000, 800));
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+
     }
 
     public void placeTile(int column) {
         for (int row = 0; row < 6; row++) {
             if (tileGrid[row][column] == Tile.EMPTY.getI()) {
                 tileGrid[row][column] = isRedTurn ? Tile.RED.getI() : Tile.YELLOW.getI();
-                gameBoardPanel.getButtons()[row][column].setIcon(isRedTurn ? GameBoardPanel.RED_TILE : GameBoardPanel.YELLOW_TILE);
+                gameBoardView.getButtons()[row][column].setIcon(isRedTurn ? GameBoardView.RED_TILE : GameBoardView.YELLOW_TILE);
 
                 tileCounter++;
                 if (hasWon(row, column)) {
@@ -105,15 +111,22 @@ public class Game extends JFrame implements ActionListener {
 
     private boolean checkLeftUpWin(int lowRow, int highRow, int lowColumn, int highColumn,
                                    int placedRow, int placedColumn, int correctColor) {
+
+
         int inARowCounter = 0;
 
-
         int columnDifference = lowColumn - placedColumn;
-        int rowDifference =  lowRow - placedRow;
+        int rowDifference = lowRow - placedRow;
 
         int columnRowDifference = columnDifference - rowDifference;
 
-        if (columnRowDifference < 0) lowColumn -= columnRowDifference;
+
+        if (columnRowDifference > 0 && placedColumn < 3) {
+            lowRow += columnRowDifference;
+
+        } else if (columnRowDifference < 0) {
+            lowColumn -= columnRowDifference;
+        }
 
 
         while (lowRow <= highRow && lowColumn <= highColumn) {
@@ -136,8 +149,11 @@ public class Game extends JFrame implements ActionListener {
 
         int columnRowDifference = columnDifference - rowDifference;
 
-        if (columnRowDifference > 0) highRow -= columnRowDifference;
-        else lowColumn -= columnRowDifference;
+        if (columnRowDifference > 0) {
+            highRow -= columnRowDifference;
+        } else {
+            lowColumn -= columnRowDifference;
+        }
 
         while (highRow >= lowRow && lowColumn <= highColumn) {
             inARowCounter = ((tileGrid[highRow][lowColumn] == correctColor) ? inARowCounter + 1 : 0);
@@ -161,11 +177,22 @@ public class Game extends JFrame implements ActionListener {
             yellowPlayer.getGameStats().addWin();
             redPlayer.getGameStats().addLoss();
         }
-        gameBoardPanel.getButtonList().forEach(e -> e.removeActionListener(this));
+        gameBoardView.getButtonList().forEach(e -> e.removeActionListener(this));
         UserDatabase.save();
-        JOptionPane.showMessageDialog(this, getHighScoreString(), "Highscore", JOptionPane.INFORMATION_MESSAGE);
 
-        System.exit(0);
+        JOptionPane.showMessageDialog(this, isWon ? (
+                (isRedTurn ? "Röd" : "Gul") + " spelare vann!") :
+                "Matchen blev oavgjort!");
+
+        Object[] option = {"Spela igen", "Avsluta"};
+        int n = JOptionPane.showOptionDialog(this, getHighScoreString(), "Highscore",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, winnerIcon, option, option[0]);
+        if (n == 0) {
+            Window win = SwingUtilities.getWindowAncestor(gameBoardView);
+            win.dispose();
+            UserDatabase.load();
+            new LoginMenuView();
+        } else System.exit(0);
     }
 
     public void addUser(User user) {
@@ -180,16 +207,15 @@ public class Game extends JFrame implements ActionListener {
     }
 
     private void startGame() {
-        remove(loginMenuPanel);
-        add(gameBoardPanel);
+        remove(loginMenuView);
+        add(gameBoardView);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
         for (int row = 0; row < 6; row++) {
             for (int column = 0; column < 7; column++) {
-                if (e.getSource() == gameBoardPanel.getButtons()[row][column]) {
+                if (e.getSource() == gameBoardView.getButtons()[row][column]) {
                     placeTile(column);
                 }
             }
@@ -200,7 +226,7 @@ public class Game extends JFrame implements ActionListener {
         return isRedTurn;
     }
 
-    public String getHighScoreString(){
+    public String getHighScoreString() {
         StringBuilder highScore = new StringBuilder();
 
         List<User> sortedUsers = UserDatabase.getUserList();

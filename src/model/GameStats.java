@@ -1,3 +1,5 @@
+package model;
+
 import java.io.Serializable;
 import java.text.DecimalFormat;
 
@@ -10,7 +12,7 @@ public class GameStats implements Score, Serializable {
 
     @Override
     public String getWinPercentageString() {
-        return twoDecimal.format((double)wins/(wins + losses + ties)*100)+"%";
+        return twoDecimal.format((double) wins / (wins + losses + ties) * 100) + "%";
     }
 
     @Override
