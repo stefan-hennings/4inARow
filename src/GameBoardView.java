@@ -11,12 +11,12 @@ public class GameBoardView extends JPanel {
     public static final ImageIcon YELLOW_ARROW_TILE = formatIcon(new ImageIcon("src\\images\\yellowArrowTile.png"), 100, 100);
     public static final ImageIcon RED_TILE = formatIcon(new ImageIcon("src\\images\\redTile.png"), 100, 100);
     public static final ImageIcon RED_ARROW_TILE = formatIcon(new ImageIcon("src\\images\\redArrowTile.png"), 100, 100);
-
+    
     private final JButton[][] buttons = new JButton[6][7];
     private final List<JButton> buttonList = new ArrayList<>();
-
+    
     private final GameController gameController;
-
+    
     public GameBoardView(GameController gameController) {
         this.gameController = gameController;
         setBackground(LoginMenuView.BACKGROUND_COLOR);
@@ -24,7 +24,7 @@ public class GameBoardView extends JPanel {
         createButtons();
         repaint();
     }
-
+    
     private void createButtons() {
         for (int row = 5; row >= 0; row--) {
             for (int column = 0; column < 7; column++) {
@@ -47,20 +47,20 @@ public class GameBoardView extends JPanel {
             }
         }
     }
-
+    
     public static ImageIcon formatIcon(ImageIcon oldImageIcon, int width,
                                        int height) {
         Image oldImage = oldImageIcon.getImage();
         Image newImg = oldImage.getScaledInstance(width, height,
                 java.awt.Image.SCALE_SMOOTH);
-
+        
         return new ImageIcon(newImg);
     }
-
+    
     public List<JButton> getButtonList() {
         return buttonList;
     }
-
+    
     public JButton[][] getButtons() {
         return buttons;
     }

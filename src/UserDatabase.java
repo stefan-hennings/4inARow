@@ -8,7 +8,7 @@ import java.util.Optional;
 public class UserDatabase {
     private static List<User> userList;
     private static final String fileName = "database.ser";
-
+    
     @SuppressWarnings("unchecked")
     public static void load() {
         try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(fileName))) {
@@ -18,7 +18,7 @@ public class UserDatabase {
             save();
         }
     }
-
+    
     public static void save() {
         try (ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(fileName))) {
             writer.writeObject(userList);
@@ -26,7 +26,7 @@ public class UserDatabase {
             e.printStackTrace();
         }
     }
-
+    
     public static void addUser(User receivedUser) {
         Optional<User> userOptional = userList.stream()
                 .filter(user -> user.getUserName().equals(receivedUser.getUserName()))
@@ -38,19 +38,19 @@ public class UserDatabase {
             throw new IllegalArgumentException("Användaren finns redan");
         }
     }
-
+    
     public static Optional<User> getUser(String userName, String password) {
         return userList.stream()
                 .filter(user -> user.getUserName().equals(userName))
                 .filter(user -> user.getPassword().equals(password))
                 .findFirst();
     }
-
+    
     public static String removeUser(String userName) {
         Optional<User> userOptional = userList.stream()
                 .filter(user -> user.getUserName().equals(userName))
                 .findFirst();
-
+        
         if (userOptional.isPresent()) {
             userList.remove(userOptional.get());
             save();
@@ -59,7 +59,7 @@ public class UserDatabase {
             return "Hittade inte användaren";
         }
     }
-
+    
     public static List<User> getUserList() {
         load();
         return userList;
