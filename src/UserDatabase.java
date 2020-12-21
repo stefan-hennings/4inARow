@@ -2,6 +2,7 @@ import model.User;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,10 +40,10 @@ public class UserDatabase {
         }
     }
     
-    public static Optional<User> getUser(String userName, String password) {
+    public static Optional<User> getUser(String userName, char[] password) {
         return userList.stream()
                 .filter(user -> user.getUserName().equals(userName))
-                .filter(user -> user.getPassword().equals(password))
+                .filter(user -> Arrays.equals(user.getPassword(), password))
                 .findFirst();
     }
     

@@ -10,7 +10,7 @@ public class LoginMenuView extends JPanel implements ActionListener {
     public static final Color FOREGROUND_COLOR = new Color(0x79AA9E);
     public static final Color BACKGROUND_COLOR = new Color(0x0123AA);
     private final JTextField userNameField = new JTextField("");
-    private final JTextField passwordField = new JTextField("");
+    private final JPasswordField passwordField = new JPasswordField();
     private final JButton newUserButton = new JButton("Skapa ny användare");
     private final JButton confirmLoginButton = new JButton("Logga in");
     private final JButton removeUserButton = new JButton("Ta bort användare");
@@ -90,9 +90,16 @@ public class LoginMenuView extends JPanel implements ActionListener {
     }
     
     void createUser() {
+        if (userNameField.getText().length() < 4) {
+            outputLabel.setText("Användarnamnet behöver vara minst 4 tecken långt");
+            return;
+        } else if (passwordField.getPassword().length < 6) {
+            outputLabel.setText("Lösenordet behöver vara minst 6 tecken långt");
+            return;
+        }
         User user = new User()
                 .setUserName(userNameField.getText().trim())
-                .setPassword(passwordField.getText().trim());
+                .setPassword(passwordField.getPassword());
         
         try {
             UserDatabase.addUser(user);
@@ -100,11 +107,13 @@ public class LoginMenuView extends JPanel implements ActionListener {
         } catch (IllegalArgumentException e) {
             outputLabel.setText(e.getMessage());
         }
+        passwordField.setText("");
     }
     
     void attemptLogin() {
         Optional<User> userOptional;
-        userOptional = UserDatabase.getUser(userNameField.getText(), passwordField.getText());
+        userOptional = UserDatabase.getUser(userNameField.getText(), passwordField.getPassword());
+        passwordField.setText("");
         userOptional.ifPresentOrElse(this::loginSuccessful, this::loginFail);
     }
     

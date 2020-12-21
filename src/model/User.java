@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable, Comparable<User> {
     
     private String userName;
-    private String password;
+    private char[] password;
     private final GameStats gameStats;
     
     public User() {
@@ -30,11 +30,11 @@ public class User implements Serializable, Comparable<User> {
         return gameStats;
     }
     
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
     
-    public User setPassword(String password) {
+    public User setPassword(char[] password) {
         this.password = password;
         return this;
     }
